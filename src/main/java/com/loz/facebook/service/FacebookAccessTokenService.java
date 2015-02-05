@@ -12,15 +12,16 @@ import java.util.logging.Logger;
 @Service
 public class FacebookAccessTokenService {
 
-    @Value("${spring.social.facebook.appId}")
+    @Value("${facebook.appId}")
     private String appId;
-    @Value("${spring.social.facebook.appSecret}")
+    @Value("${facebook.appSecret}")
     private String appSecret;
 
     private String token;
     private Logger logger = Logger.getAnonymousLogger();
 
-    public String URL_GET_TOKEN = "https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&grant_type=client_credentials";
+    @Value("${facebook.url.get_token}")
+    private String URL_GET_TOKEN;
 
     public String getToken() {
         if (token == null) {

@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.logging.Logger;
 
 @Service
-public class FacebookStatusFeedService {
+public class FacebookFeedService {
 
-    @Value("${spring.social.facebook.pageId}")
+    @Value("${facebook.pageId}")
     private String pageId;
 
     @Autowired
@@ -22,13 +22,15 @@ public class FacebookStatusFeedService {
 
     private Logger logger = Logger.getAnonymousLogger();
 
-    public String URL_GET_EVENTS = "https://graph.facebook.com/v2.2/{pageId}?fields=events{filters}&access_token={accessToken}";
+    @Value("${facebook.url.get_events}")
+    private String URL_GET_EVENTS;
 
     public EventResponse getEvents() throws FacebookAccessException {
         RestTemplate restTemplate = new RestTemplate();
         String accessToken = facebookAccessTokenService.getToken();
         String filters = "{end_time,description,id,name,noreply_count,cover}";
 
+        logger.info("Requesting from URL "+URL_GET_EVENTS);
         ResponseEntity<EventResponse> response = restTemplate.getForEntity(URL_GET_EVENTS, EventResponse.class, pageId, filters, accessToken);
         logger.info("Received events from Facebook: "+response.getBody());
         if (response.getStatusCode().equals(HttpStatus.OK)) {
