@@ -3,9 +3,9 @@ package com.loz.twitter.service;
 import com.loz.facebook.service.exception.FacebookAccessTokenNotFoundException;
 import com.loz.twitter.service.exception.TwitterAccessException;
 import com.loz.twitter.service.exception.TwitterAccessTokenNotFoundException;
-import com.oracle.javafx.jmx.json.JSONDocument;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.HttpClient;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.boot.json.JsonSimpleJsonParser;
@@ -36,7 +36,7 @@ public class TwitterAccessTokenService {
     private String urlGetToken;
 
     private String token;
-    private Logger logger = Logger.getAnonymousLogger();
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TwitterAccessTokenService.class);
 
     @Value("${facebook.url.get_token}")
     private String URL_GET_TOKEN;
@@ -46,7 +46,7 @@ public class TwitterAccessTokenService {
             try {
                 token = getNewToken();
             } catch (TwitterAccessException e) {
-                logger.severe("Twitter Access token not found with credentials");
+                LOGGER.error("Twitter Access token not found with credentials");
             }
         }
         return token;

@@ -1,4 +1,4 @@
-package com.loz.facebook.service.dao;
+package com.loz.facebook.service.dao.feed;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

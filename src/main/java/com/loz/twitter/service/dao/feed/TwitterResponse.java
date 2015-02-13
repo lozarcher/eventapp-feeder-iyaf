@@ -1,4 +1,4 @@
-package com.loz.twitter.service.dao;
+package com.loz.twitter.service.dao.feed;
 
 import java.util.List;
 

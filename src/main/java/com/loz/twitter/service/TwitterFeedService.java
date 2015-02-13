@@ -1,19 +1,13 @@
 package com.loz.twitter.service;
 
-import com.loz.facebook.service.FacebookAccessTokenService;
-import com.loz.facebook.service.dao.EventResponse;
-import com.loz.facebook.service.exception.FacebookAccessException;
-import com.loz.twitter.service.dao.TwitterResponse;
+import com.loz.twitter.service.dao.feed.TwitterResponse;
 import com.loz.twitter.service.exception.TwitterAccessException;
-import org.apache.commons.codec.binary.Base64;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.nio.charset.Charset;
-import java.util.logging.Logger;
 
 @Service
 public class TwitterFeedService {
@@ -22,7 +16,7 @@ public class TwitterFeedService {
     @Autowired
     private TwitterAccessTokenService twitterAccessTokenService;
 
-    private Logger logger = Logger.getAnonymousLogger();
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TwitterFeedService.class);
 
     @Value("${twitter.url.search_tweets}")
     private String URL_SEARCH_TWEETS;
@@ -36,7 +30,7 @@ public class TwitterFeedService {
         if (accessToken == null) {
             throw new TwitterAccessException("Twitter access token is null");
         }
-        logger.info("Requesting from URL "+URL_SEARCH_TWEETS);
+        LOGGER.debug("Requesting from URL " + URL_SEARCH_TWEETS);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -48,7 +42,7 @@ public class TwitterFeedService {
         } catch (Exception e) {
             throw new TwitterAccessException("Cannot reach Twitter: ");
         }
-        logger.info("Received tweets from Twitter: " + response.getBody());
+        LOGGER.debug("Received tweets from Twitter: " + response.getBody());
         if (response.getStatusCode().equals(HttpStatus.OK)) {
             return response.getBody();
         } else {

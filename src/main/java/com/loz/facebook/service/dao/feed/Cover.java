@@ -1,4 +1,4 @@
-package com.loz.facebook.service.dao.events;
+package com.loz.facebook.service.dao.feed;
 
 /**
  * Created by loz on 05/02/15.

@@ -1,7 +1,8 @@
 package com.loz.facebook.service;
 
-import com.loz.facebook.service.dao.EventResponse;
+import com.loz.facebook.service.dao.feed.EventResponse;
 import com.loz.facebook.service.exception.FacebookAccessException;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class FacebookFeedService {
     @Autowired
     private FacebookAccessTokenService facebookAccessTokenService;
 
-    private Logger logger = Logger.getAnonymousLogger();
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(FacebookFeedService.class);
 
     @Value("${facebook.url.get_events}")
     private String URL_GET_EVENTS;
@@ -30,9 +31,9 @@ public class FacebookFeedService {
         String accessToken = facebookAccessTokenService.getToken();
         String filters = "{end_time,description,id,name,noreply_count,cover}";
 
-        logger.info("Requesting from URL "+URL_GET_EVENTS);
+        LOGGER.debug("Requesting from URL "+URL_GET_EVENTS);
         ResponseEntity<EventResponse> response = restTemplate.getForEntity(URL_GET_EVENTS, EventResponse.class, pageId, filters, accessToken);
-        logger.info("Received events from Facebook: "+response.getBody());
+        LOGGER.debug("Received events from Facebook: "+response.getBody());
         if (response.getStatusCode().equals(HttpStatus.OK)) {
             return response.getBody();
         } else {

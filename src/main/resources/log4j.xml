@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration debug="true" xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd/MM/yy HH:mm:ss} (uid:%X{UID}; tid:%X{TID}; did:%X{DID}) %p %c %L - %m%n" />
+        </layout>
+    </appender>
+
+    <category name="com.loz">
+        <priority value="DEBUG" />
+    </category>
+
+    <category name="org.hibernate">
+        <priority value="INFO" />
+    </category>
+
+    <root>
+        <priority value ="INFO" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</log4j:configuration>

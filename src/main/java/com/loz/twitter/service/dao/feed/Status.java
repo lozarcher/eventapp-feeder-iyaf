@@ -1,4 +1,4 @@
-package com.loz.twitter.service.dao;
+package com.loz.twitter.service.dao.feed;
 
 /**
  * Created by loz on 05/02/15.
