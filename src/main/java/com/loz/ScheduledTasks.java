@@ -24,8 +24,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 @EnableScheduling
@@ -96,6 +100,14 @@ public class ScheduledTasks {
             if (user != null) {
                 tweetData.setName(user.getName());
                 tweetData.setScreenName(user.getScreen_name());
+                DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+                try {
+                    Date result =  df.parse(status.getCreated_at());
+                    tweetData.setCreatedDate(result);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    LOGGER.error("Could not parse Tweet date {}", status.getCreated_at());
+                }
             }
             tweetData.setText(status.getText());
             LOGGER.debug("Saving tweet {}", tweetData.getScreenName()+": "+tweetData.getText());

@@ -1,4 +1,4 @@
-create table EVENT (
+create table foodfest.EVENT (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
       DESCRIPTION varchar(4000) null,
@@ -6,13 +6,14 @@ create table EVENT (
       START_TIME TIMESTAMP null,
       END_TIME TIMESTAMP null
 );
-create table TWEET (
+create table foodfest.TWEET (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
       SCREEN_NAME varchar(255) null,
-      TEXT BLOB null
+      TEXT BLOB null,
+      CREATED_DATE TIMESTAMP not null
 );
-create table LAST_REFRESH (
+create table foodfest.LAST_REFRESH (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	TABLE_NAME varchar(255) not null,
     LAST_REFRESH TIMESTAMP not null
