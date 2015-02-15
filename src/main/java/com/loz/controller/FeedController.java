@@ -3,6 +3,7 @@ package com.loz.controller;
 import com.loz.facebook.service.FacebookService;
 import com.loz.facebook.service.dao.model.EventData;
 import com.loz.shared.dao.EventResponse;
+import com.loz.shared.dao.TweetResponse;
 import com.loz.twitter.service.TwitterFeedService;
 import com.loz.twitter.service.TwitterService;
 import com.loz.twitter.service.dao.domain.TweetData;
@@ -43,8 +44,11 @@ public class FeedController {
 
     @RequestMapping("/tweets")
     @ResponseBody
-    public Iterable<TweetData> tweets() {
-        return twitterService.getTweets();
+    public TweetResponse tweets() {
+        TweetResponse response = new TweetResponse();
+        response.setDate(new Date());
+        response.setData(twitterService.getTweets());
+        return response;
     }
 
 }
