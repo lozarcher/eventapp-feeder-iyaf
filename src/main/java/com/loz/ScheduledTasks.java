@@ -63,16 +63,7 @@ public class ScheduledTasks {
         }
         List<Event> eventList = eventsResponse.getData();
         for (Event event : eventList) {
-            EventData eventData = new EventData();
-            eventData.setId(event.getId());
-            eventData.setName(event.getName());
-            eventData.setDescription(event.getDescription());
-            Cover cover = event.getCover();
-            if (cover != null) {
-                eventData.setCoverUrl(cover.getSource());
-            }
-            eventData.setStartTime(event.getStart_time());
-            eventData.setEndTime(event.getEnd_time());
+            EventData eventData = new EventData(event);
             LOGGER.debug("Saving event {}", event.getName());
             eventDao.save(eventData);
         }
@@ -92,22 +83,7 @@ public class ScheduledTasks {
         }
         List<Status> statuses = twitterResponse.getStatuses();
         for (Status status : statuses) {
-            TweetData tweetData = new TweetData();
-            tweetData.setId(Long.parseLong(status.getId_str()));
-            User user = status.getUser();
-            if (user != null) {
-                tweetData.setName(user.getName());
-                tweetData.setScreenName(user.getScreen_name());
-                DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
-                try {
-                    Date result =  df.parse(status.getCreated_at());
-                    tweetData.setCreatedDate(result);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    LOGGER.error("Could not parse Tweet date {}", status.getCreated_at());
-                }
-            }
-            tweetData.setText(status.getText());
+            TweetData tweetData = new TweetData(status);
             LOGGER.debug("Saving tweet {}", tweetData.getScreenName()+": "+tweetData.getText());
             tweetDao.save(tweetData);
         }

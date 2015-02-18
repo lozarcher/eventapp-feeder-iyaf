@@ -1,14 +1,25 @@
 package com.loz.twitter.service.dao.domain;
 
+import com.loz.twitter.service.dao.feed.Status;
+import com.loz.twitter.service.dao.feed.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 @Table(name = "TWEET")
 public class TweetData {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TweetData.class);
 
     @Id
     @Column(name = "ID", unique = true)
@@ -25,6 +36,9 @@ public class TweetData {
 
     @Column(name = "CREATED_DATE")
     private Date createdDate;
+
+    public TweetData() {
+    }
 
     public Long getId() {
         return id;
@@ -64,5 +78,24 @@ public class TweetData {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public TweetData(Status status) {
+        new TweetData();
+        this.setId(Long.parseLong(status.getId_str()));
+        User user = status.getUser();
+        if (user != null) {
+            this.setName(user.getName());
+            this.setScreenName(user.getScreen_name());
+            DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+            try {
+                Date result =  df.parse(status.getCreated_at());
+                this.setCreatedDate(result);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                LOGGER.error("Could not parse Tweet date {}", status.getCreated_at());
+            }
+        }
+        this.setText(status.getText());
     }
 }

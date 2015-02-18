@@ -2,6 +2,8 @@ package com.loz.facebook.service.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.loz.facebook.service.dao.feed.Cover;
+import com.loz.facebook.service.dao.feed.Event;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,6 +33,9 @@ public class EventData {
 
     @Column(name = "LOCATION")
     private String location;
+
+    public EventData() {
+    }
 
     public Long getId() {
         return id;
@@ -87,4 +92,19 @@ public class EventData {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public EventData(Event event) {
+        new EventData();
+        this.setId(event.getId());
+        this.setName(event.getName());
+        this.setDescription(event.getDescription());
+        this.setLocation(event.getLocation());
+        Cover cover = event.getCover();
+        if (cover != null) {
+            this.setCoverUrl(cover.getSource());
+        }
+        this.setStartTime(event.getStart_time());
+        this.setEndTime(event.getEnd_time());
+    }
+
 }
