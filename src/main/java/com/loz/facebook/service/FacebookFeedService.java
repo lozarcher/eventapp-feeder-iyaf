@@ -2,6 +2,7 @@ package com.loz.facebook.service;
 
 import com.loz.facebook.service.dao.feed.EventResponse;
 import com.loz.facebook.service.exception.FacebookAccessException;
+import com.sun.deploy.net.HttpUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+import java.net.*;
 import java.util.logging.Logger;
 
 @Service
@@ -27,18 +30,48 @@ public class FacebookFeedService {
     private String URL_GET_EVENTS;
 
     public EventResponse getEvents() throws FacebookAccessException {
+        EventResponse paginatedEventResponse = new EventResponse();
         RestTemplate restTemplate = new RestTemplate();
         String accessToken = facebookAccessTokenService.getToken();
-        String filters = "{end_time,description,id,name,noreply_count,cover}";
+        String filters = "end_time,description,id,name,noreply_count,cover";
 
-        LOGGER.debug("Requesting from URL "+URL_GET_EVENTS);
-        ResponseEntity<EventResponse> response = restTemplate.getForEntity(URL_GET_EVENTS, EventResponse.class, pageId, filters, accessToken);
-        LOGGER.debug("Received events from Facebook: "+response.getBody());
-        if (response.getStatusCode().equals(HttpStatus.OK)) {
-            return response.getBody();
-        } else {
-            throw new FacebookAccessException("Status code "+response.getStatusCode());
+
+        boolean lastPage = false;
+
+        String getEventsUrl = String.format(URL_GET_EVENTS, pageId, filters, accessToken);
+        LOGGER.debug("Requesting from URL "+getEventsUrl);
+
+        while (lastPage == false) {
+            ResponseEntity<EventResponse> response = null;
+            try {
+                response = restTemplate.getForEntity(URLDecoder.decode(getEventsUrl, "UTF-8"), EventResponse.class);
+            } catch (UnsupportedEncodingException e) {
+                LOGGER.error("URL syntax invalid " + getEventsUrl);
+                throw new FacebookAccessException(e.getMessage());
+            }
+            if (!response.getStatusCode().equals(HttpStatus.OK)) {
+                LOGGER.error("Facebook access error");
+                throw new FacebookAccessException("Status code "+response.getStatusCode());
+            }
+            if (paginatedEventResponse.getData() == null) {
+                paginatedEventResponse = response.getBody();
+            } else {
+                paginatedEventResponse.addData(response.getBody().getData());
+            }
+
+
+            lastPage = true;
+            if (response.getBody().getPaging() != null) {
+                String nextPage = response.getBody().getPaging().getNext();
+                if (nextPage != null) {
+                    lastPage = false;
+                    getEventsUrl = nextPage;
+                } else {
+                    lastPage = true;
+                }
+            }
         }
+        return paginatedEventResponse;
     }
 }
 

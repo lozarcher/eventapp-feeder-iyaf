@@ -1,23 +1,33 @@
 package com.loz.facebook.service.dao.feed;
 
+import java.util.List;
+
 public class EventResponse {
 
-    private Long id;
-    private Events events;
+    private List<Event> data;
+    private Paging paging;
 
-    public Long getId() {
-        return id;
+    public List<Event> getData() {
+        return data;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setData(List<Event> events) {
+        this.data = events;
     }
 
-    public Events getEvents() {
-        return events;
+    public void addData(List<Event> moreEvents) {
+        if (this.data == null) {
+            this.data = moreEvents;
+        } else {
+            this.data.addAll(moreEvents);
+        }
     }
 
-    public void setEvents(Events events) {
-        this.events = events;
+    public Paging getPaging() {
+        return paging;
+    }
+
+    public void setPaging(Paging paging) {
+        this.paging = paging;
     }
 }
