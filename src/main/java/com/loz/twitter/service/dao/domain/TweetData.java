@@ -23,6 +23,9 @@ public class TweetData {
     @Column(name = "TEXT")
     private String text;
 
+    @Column(name = "CREATED_DATE")
+    private Date createdDate;
+
     public Long getId() {
         return id;
     }
@@ -53,5 +56,13 @@ public class TweetData {
 
     public void setScreenName(String screenName) {
         this.screenName = screenName;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

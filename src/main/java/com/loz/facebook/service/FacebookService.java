@@ -17,6 +17,6 @@ public class FacebookService {
     EventDao eventDao;
 
     public Iterable<EventData> getEvents() {
-        return eventDao.findAll();
+        return eventDao.findAllOrderByDate();
     }
 }
