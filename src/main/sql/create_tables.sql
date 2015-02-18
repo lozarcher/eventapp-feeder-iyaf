@@ -4,6 +4,7 @@ create table foodfest.EVENT (
       NAME varchar(255) null,
       DESCRIPTION varchar(4000) null,
       COVER_URL varchar(255) null,
+      LOCATION varchar(255) null,
       START_TIME TIMESTAMP null,
       END_TIME TIMESTAMP null
 );

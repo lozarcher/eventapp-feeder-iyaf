@@ -32,7 +32,7 @@ public class FacebookFeedService {
         EventResponse paginatedEventResponse = new EventResponse();
         RestTemplate restTemplate = new RestTemplate();
         String accessToken = facebookAccessTokenService.getToken();
-        String filters = "end_time,description,id,name,noreply_count,cover";
+        String filters = "id,start_time,end_time,location,description,id,name,cover";
 
 
         boolean lastPage = false;

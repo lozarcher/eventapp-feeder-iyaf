@@ -12,6 +12,7 @@ public class Event {
     private Cover cover;
     private Date start_time;
     private Date end_time;
+    private String location;
 
     public Long getId() {
         return id;
@@ -59,6 +60,14 @@ public class Event {
 
     public void setEnd_time(Date end_time) {
         this.end_time = end_time;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
 
