@@ -6,7 +6,6 @@ import com.loz.facebook.service.dao.LastRefreshDao;
 import com.loz.facebook.service.dao.feed.Cover;
 import com.loz.facebook.service.dao.feed.Event;
 import com.loz.facebook.service.dao.feed.EventResponse;
-import com.loz.facebook.service.dao.feed.Events;
 import com.loz.facebook.service.dao.model.EventData;
 import com.loz.facebook.service.dao.model.LastRefreshData;
 import com.loz.facebook.service.exception.FacebookAccessException;
@@ -62,8 +61,7 @@ public class ScheduledTasks {
             LOGGER.error("Cannot retrieve events",e);
             throw new RuntimeException("Cannot retrieve events");
         }
-        Events events = eventsResponse.getEvents();
-        List<Event> eventList = events.getData();
+        List<Event> eventList = eventsResponse.getData();
         for (Event event : eventList) {
             EventData eventData = new EventData();
             eventData.setId(event.getId());
