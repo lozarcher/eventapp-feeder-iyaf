@@ -2,7 +2,6 @@ package com.loz.facebook.service;
 
 import com.loz.facebook.service.dao.feed.EventResponse;
 import com.loz.facebook.service.exception.FacebookAccessException;
-import com.sun.deploy.net.HttpUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

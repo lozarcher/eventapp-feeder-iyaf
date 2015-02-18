@@ -1,6 +1,5 @@
 package com.loz.shared.dao;
 
-import com.loz.facebook.service.dao.feed.Events;
 import com.loz.facebook.service.dao.model.EventData;
 
 import java.util.Date;
