@@ -1,6 +1,7 @@
 package com.loz.facebook.service.dao.feed;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.loz.facebook.service.dao.model.VenueData;
 
 import java.util.Date;
 
@@ -13,6 +14,7 @@ public class Event {
     private Date start_time;
     private Date end_time;
     private String location;
+    private Venue venue;
 
     public Long getId() {
         return id;
@@ -68,6 +70,14 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue= venue;
     }
 }
 

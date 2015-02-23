@@ -28,16 +28,17 @@ public class FacebookFeedService {
     @Value("${facebook.url.get_events}")
     private String URL_GET_EVENTS;
 
+    @Value("${facebook.url.get_events.filters}")
+    private String URL_GET_EVENTS_FILTERS;
+
     public EventResponse getEvents() throws FacebookAccessException {
         EventResponse paginatedEventResponse = new EventResponse();
         RestTemplate restTemplate = new RestTemplate();
         String accessToken = facebookAccessTokenService.getToken();
-        String filters = "id,start_time,end_time,location,description,id,name,cover";
-
 
         boolean lastPage = false;
 
-        String getEventsUrl = String.format(URL_GET_EVENTS, pageId, filters, accessToken);
+        String getEventsUrl = String.format(URL_GET_EVENTS, pageId, URL_GET_EVENTS_FILTERS, accessToken);
         LOGGER.debug("Requesting from URL "+getEventsUrl);
 
         while (lastPage == false) {
