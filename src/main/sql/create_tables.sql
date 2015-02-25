@@ -1,5 +1,5 @@
-drop table if exists foodfest.EVENT;
-create table foodfest.EVENT (
+drop table if exists foodfest.event;
+create table foodfest.event (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
       DESCRIPTION varchar(4000) null,
@@ -9,22 +9,22 @@ create table foodfest.EVENT (
       END_TIME TIMESTAMP null,
       VENUE_ID NUMERIC(20,0) null
 );
-drop table if exists foodfest.TWEET;
-create table foodfest.TWEET (
+drop table if exists foodfest.tweet;
+create table foodfest.tweet (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
       SCREEN_NAME varchar(255) null,
       TEXT BLOB null,
       CREATED_DATE TIMESTAMP not null
 );
-drop table if exists foodfest.LAST_REFRESH;
-create table foodfest.LAST_REFRESH (
+drop table if exists foodfest.last_refresh;
+create table foodfest.last_refresh (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	TABLE_NAME varchar(255) not null,
   LAST_REFRESH TIMESTAMP not null
 );
-drop table if exists foodfest.VENUE;
-create table foodfest.VENUE (
+drop table if exists foodfest.venue;
+create table foodfest.venue (
 	ID NUMERIC(20,0)  NOT NULL PRIMARY KEY,
 	LOCATION varchar(255),
 	STREET varchar(255),
