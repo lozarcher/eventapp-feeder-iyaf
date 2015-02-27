@@ -1,14 +1,13 @@
 package com.loz.controller;
 
-import com.loz.facebook.service.FacebookService;
-import com.loz.facebook.service.dao.model.EventData;
-import com.loz.facebook.service.dao.model.VenueData;
-import com.loz.shared.dao.EventResponse;
-import com.loz.shared.dao.TweetResponse;
-import com.loz.shared.dao.VenueResponse;
-import com.loz.twitter.service.TwitterFeedService;
-import com.loz.twitter.service.TwitterService;
-import com.loz.twitter.service.dao.domain.TweetData;
+import com.loz.service.FacebookService;
+import com.loz.dao.responseVo.EventResponse;
+import com.loz.dao.responseVo.TweetResponse;
+import com.loz.dao.responseVo.VenueResponse;
+import com.loz.dao.responseVo.VoucherResponse;
+import com.loz.service.TwitterFeedService;
+import com.loz.service.TwitterService;
+import com.loz.service.VoucherService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,9 @@ public class FeedController {
     TwitterService twitterService;
 
     @Autowired
+    VoucherService voucherService;
+
+    @Autowired
     TwitterFeedService twitterFeedService;
 
     @RequestMapping("/events")
@@ -38,6 +40,15 @@ public class FeedController {
         response.setDate(new Date());
         response.setData(facebookService.getEvents());
         // response.setData(new ArrayList<EventData>());   // Empty response for testing UI
+        return response;
+    }
+
+    @RequestMapping("/vouchers")
+    @ResponseBody
+    public VoucherResponse vouchers() {
+        VoucherResponse response = new VoucherResponse();
+        response.setDate(new Date());
+        response.setData(voucherService.getVouchers());
         return response;
     }
 

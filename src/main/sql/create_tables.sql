@@ -33,9 +33,10 @@ create table foodfest.venue (
 	LATITUDE DOUBLE,
 	LONGITUDE DOUBLE
 );
-drop table if exists foodfest.vouchers;
-create table foodfest.vouchers (
+drop table if exists foodfest.voucher;
+create table foodfest.voucher (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	POSITION INT,
 	TITLE varchar(255),
 	URL varchar(255)
 );
