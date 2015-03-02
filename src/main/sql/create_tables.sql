@@ -15,6 +15,7 @@ create table foodfest.tweet (
       NAME varchar(255) null,
       SCREEN_NAME varchar(255) null,
       TEXT BLOB null,
+      PROFILE_PIC varchar(255) null,
       CREATED_DATE TIMESTAMP not null
 );
 drop table if exists foodfest.last_refresh;

@@ -37,6 +37,9 @@ public class TweetData {
     @Column(name = "CREATED_DATE")
     private Date createdDate;
 
+    @Column(name = "PROFILE_PIC")
+    private String profilePic;
+
     public TweetData() {
     }
 
@@ -80,6 +83,14 @@ public class TweetData {
         this.createdDate = createdDate;
     }
 
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
     public TweetData(Status status) {
         new TweetData();
         this.setId(Long.parseLong(status.getId_str()));
@@ -87,6 +98,7 @@ public class TweetData {
         if (user != null) {
             this.setName(user.getName());
             this.setScreenName(user.getScreen_name());
+            this.setProfilePic(user.getProfile_image_url());
             DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
             try {
                 Date result =  df.parse(status.getCreated_at());
