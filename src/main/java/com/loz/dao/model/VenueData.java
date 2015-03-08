@@ -24,6 +24,11 @@ public class VenueData implements Serializable{
     private Double latitude;
     @Column(name = "LONGITUDE")
     private Double longitude;
+    @Column(name = "PHONE")
+    private String phone;
+    @Column (name = "WEBSITE")
+    private String website;
+
     @Transient
     private String location;
 
@@ -86,6 +91,22 @@ public class VenueData implements Serializable{
         this.location = location;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     public VenueData(Venue venue) {
         new VenueData();
         this.setId(venue.getId());
@@ -94,5 +115,7 @@ public class VenueData implements Serializable{
         this.setPostcode(venue.getPostcode());
         this.setLatitude(venue.getLatitude());
         this.setLongitude(venue.getLongitude());
+        this.setWebsite(venue.getWebsite());
+        this.setPhone(venue.getPhone());
     }
 }

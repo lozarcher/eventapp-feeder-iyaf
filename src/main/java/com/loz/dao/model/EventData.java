@@ -32,7 +32,7 @@ public class EventData {
     @Column(name = "LOCATION")
     private String location;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private VenueData venue;
 
     public EventData() {
@@ -102,8 +102,7 @@ public class EventData {
         this.venue = venue;
     }
 
-    public EventData(Event event) {
-        new EventData();
+    public void setDataFromEvent(Event event) {
         this.setId(event.getId());
         this.setName(event.getName());
         this.setDescription(event.getDescription());
@@ -114,8 +113,12 @@ public class EventData {
         }
         this.setStartTime(event.getStart_time());
         this.setEndTime(event.getEnd_time());
-        VenueData venueData = new VenueData(event.getVenue());
-        this.setVenue(venueData);
+        if (event.getVenue() == null || event.getVenue().getId() == null) {
+            this.setVenue(null);
+        } else {
+            VenueData venueData = new VenueData(event.getVenue());
+            this.setVenue(venueData);
+        }
     }
 
 }

@@ -32,7 +32,9 @@ create table foodfest.venue (
 	CITY varchar(255),
 	POSTCODE varchar(10),
 	LATITUDE DOUBLE,
-	LONGITUDE DOUBLE
+	LONGITUDE DOUBLE,
+	WEBSITE varchar(255),
+	PHONE varchar(255)
 );
 drop table if exists foodfest.voucher;
 create table foodfest.voucher (

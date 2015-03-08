@@ -61,8 +61,9 @@ public class RefreshService {
         for (Event event : eventList) {
             EventData eventData = eventDao.findOne(event.getId());
             if (eventData == null) {
-                eventData = new EventData(event);
+                eventData = new EventData();
             }
+            eventData.setDataFromEvent(event);
             LOGGER.debug("Saving event {}", event.getName());
             eventDao.save(eventData);
         }

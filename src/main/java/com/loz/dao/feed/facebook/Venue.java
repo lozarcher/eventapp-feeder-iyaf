@@ -10,6 +10,8 @@ public class Venue {
     private String postcode;
     private Double latitude;
     private Double longitude;
+    private String phone;
+    private String website;
 
     public Long getId() {
         return id;
@@ -57,5 +59,21 @@ public class Venue {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }
