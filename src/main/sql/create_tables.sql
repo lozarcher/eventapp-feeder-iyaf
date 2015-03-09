@@ -27,7 +27,6 @@ create table foodfest.last_refresh (
 drop table if exists foodfest.venue;
 create table foodfest.venue (
 	ID NUMERIC(20,0)  NOT NULL PRIMARY KEY,
-	LOCATION varchar(255),
 	STREET varchar(255),
 	CITY varchar(255),
 	POSTCODE varchar(10),
