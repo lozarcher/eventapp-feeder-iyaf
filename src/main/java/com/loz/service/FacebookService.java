@@ -1,8 +1,10 @@
 package com.loz.service;
 
 import com.loz.dao.EventDao;
+import com.loz.dao.TraderDao;
 import com.loz.dao.VenueDao;
 import com.loz.dao.model.EventData;
+import com.loz.dao.model.TraderData;
 import com.loz.dao.model.VenueData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,9 @@ public class FacebookService {
     @Autowired
     VenueDao venueDao;
 
+    @Autowired
+    TraderDao traderDao;
+
     @Value("${facebook.get_events.since}")
     private String GET_EVENTS_SINCE;
 
@@ -54,6 +59,11 @@ public class FacebookService {
             venue.setLocation(getLocationForVenue(venue));
         }
         return venues;
+    }
+
+    public Iterable<TraderData> getTraders() {
+        Iterable<TraderData> traders = traderDao.findAll();
+        return traders;
     }
 
     private String getLocationForVenue(VenueData venueData) {

@@ -1,10 +1,7 @@
 package com.loz.controller;
 
+import com.loz.dao.responseVo.*;
 import com.loz.service.FacebookService;
-import com.loz.dao.responseVo.EventResponse;
-import com.loz.dao.responseVo.TweetResponse;
-import com.loz.dao.responseVo.VenueResponse;
-import com.loz.dao.responseVo.VoucherResponse;
 import com.loz.service.TwitterFeedService;
 import com.loz.service.TwitterService;
 import com.loz.service.VoucherService;
@@ -58,6 +55,15 @@ public class FeedController {
         TweetResponse response = new TweetResponse();
         response.setDate(new Date());
         response.setData(twitterService.getTweets());
+        return response;
+    }
+
+    @RequestMapping("/traders")
+    @ResponseBody
+    public PageResponse traders() {
+        PageResponse response = new PageResponse();
+        response.setDate(new Date());
+        response.setData(facebookService.getTraders());
         return response;
     }
 

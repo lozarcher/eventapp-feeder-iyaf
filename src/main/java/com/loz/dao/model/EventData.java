@@ -2,6 +2,7 @@ package com.loz.dao.model;
 
 import com.loz.dao.feed.facebook.Cover;
 import com.loz.dao.feed.facebook.Event;
+import com.loz.dao.feed.facebook.Picture;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,6 +23,9 @@ public class EventData {
 
     @Column(name = "COVER_URL")
     private String coverUrl;
+
+    @Column(name = "PROFILE_URL")
+    private String profileUrl;
 
     @Column(name = "START_TIME")
     private Date startTime;
@@ -102,6 +106,14 @@ public class EventData {
         this.venue = venue;
     }
 
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
+
     public void setDataFromEvent(Event event) {
         this.setId(event.getId());
         this.setName(event.getName());
@@ -110,6 +122,10 @@ public class EventData {
         Cover cover = event.getCover();
         if (cover != null) {
             this.setCoverUrl(cover.getSource());
+        }
+        Picture picture = event.getPicture();
+        if (picture != null) {
+            this.setProfileUrl(picture.getData().getUrl());
         }
         this.setStartTime(event.getStart_time());
         this.setEndTime(event.getEnd_time());

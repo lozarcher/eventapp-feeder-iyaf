@@ -27,6 +27,12 @@ public class ScheduledTasks {
         refreshService.updateEventsAndVenues();
     }
 
+    @Scheduled(cron = "${cron.refresh.events}")
+    public void refreshTraders() {
+        LOGGER.debug("Refreshing Traders");
+        refreshService.updateTraders();
+    }
+
     @Scheduled(cron = "${cron.refresh.tweets}")
     public void refreshTweets() {
         LOGGER.debug("Refreshing Tweets");

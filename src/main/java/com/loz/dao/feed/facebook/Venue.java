@@ -7,11 +7,9 @@ public class Venue {
     private Long id;
     private String street;
     private String city;
-    private String postcode;
+    private String zip;
     private Double latitude;
     private Double longitude;
-    private String phone;
-    private String website;
 
     public Long getId() {
         return id;
@@ -37,12 +35,12 @@ public class Venue {
         this.city = city;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getZip() {
+        return zip;
     }
 
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public Double getLatitude() {
@@ -59,21 +57,5 @@ public class Venue {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
     }
 }

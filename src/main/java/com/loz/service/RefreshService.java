@@ -1,14 +1,13 @@
 package com.loz.service;
 
-import com.loz.dao.EventDao;
-import com.loz.dao.LastRefreshDao;
-import com.loz.dao.VenueDao;
+import com.loz.dao.*;
 import com.loz.dao.feed.facebook.Event;
 import com.loz.dao.feed.facebook.EventResponse;
+import com.loz.dao.feed.facebook.Page;
 import com.loz.dao.model.EventData;
 import com.loz.dao.model.LastRefreshData;
+import com.loz.dao.model.TraderData;
 import com.loz.exception.FacebookAccessException;
-import com.loz.dao.TweetDao;
 import com.loz.dao.model.TweetData;
 import com.loz.dao.feed.twitter.Status;
 import com.loz.dao.feed.twitter.TwitterResponse;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +46,9 @@ public class RefreshService {
     TweetDao tweetDao;
 
     @Autowired
+    TraderDao traderDao;
+
+    @Autowired
     LastRefreshDao lastRefreshDao;
 
     @Transactional
@@ -70,6 +73,24 @@ public class RefreshService {
         updateLastRefresh("EVENT");
         updateLastRefresh("VENUE");
     }
+
+    @Transactional
+    public void updateTraders() {
+        List<Page> traders = new ArrayList<Page>();
+        try {
+            traders = facebookFeedService.getPages();
+        } catch (FacebookAccessException e) {
+            LOGGER.error("Cannot retrieve traders",e);
+            throw new RuntimeException("Cannot retrieve traders");
+        }
+        for (Page page : traders) {
+            TraderData traderData = new TraderData(page);
+            LOGGER.debug("Saving trader {}", traderData.getName());
+            traderDao.save(traderData);
+        }
+        updateLastRefresh("TRADER");
+    }
+
 
     @Transactional
     public void updateTweets() {

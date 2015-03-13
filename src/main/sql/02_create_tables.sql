@@ -3,6 +3,7 @@ create table foodfest.event (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
       DESCRIPTION varchar(4000) null,
+      PROFILE_URL varchar(255) null,
       COVER_URL varchar(255) null,
       LOCATION varchar(255) null,
       START_TIME TIMESTAMP null,
@@ -26,12 +27,25 @@ create table foodfest.last_refresh (
 );
 drop table if exists foodfest.venue;
 create table foodfest.venue (
-	ID NUMERIC(20,0)  NOT NULL PRIMARY KEY,
+	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
 	STREET varchar(255),
 	CITY varchar(255),
 	POSTCODE varchar(10),
 	LATITUDE DOUBLE,
-	LONGITUDE DOUBLE,
+	LONGITUDE DOUBLE
+);
+drop table if exists foodfest.trader_feed;
+create table foodfest.trader_feed (
+	ID NUMERIC(20,0) NOT NULL PRIMARY KEY
+);
+drop table if exists foodfest.trader;
+create table foodfest.trader (
+	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
+	NAME varchar(255) null,
+  ABOUT varchar(4000) null,
+  PROFILE_IMG varchar(255) null,
+  COVER_IMG varchar(255) null,
+	LINK varchar(255),
 	WEBSITE varchar(255),
 	PHONE varchar(255)
 );
