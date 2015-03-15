@@ -10,6 +10,7 @@ import java.util.Date;
 public class TweetResponse {
     private Date date;
     private Iterable<TweetData> data;
+    private String next;
 
     public Date getDate() {
         return date;
@@ -26,4 +27,13 @@ public class TweetResponse {
     public void setData(Iterable<TweetData> data) {
         this.data = data;
     }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
 }
+

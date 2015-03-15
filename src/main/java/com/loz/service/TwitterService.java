@@ -4,7 +4,11 @@ import com.loz.dao.TweetDao;
 import com.loz.dao.model.TweetData;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TwitterService {
@@ -14,8 +18,12 @@ public class TwitterService {
     @Autowired
     TweetDao tweetDao;
 
-    public Iterable<TweetData> getTweets() {
-        return tweetDao.findAll();
+    public List<TweetData> getTweets(Pageable pageable) {
+        return tweetDao.findTweetsOrderByDate(pageable);
+    }
+
+    public long getTotal() {
+        return tweetDao.count();
     }
 
 }

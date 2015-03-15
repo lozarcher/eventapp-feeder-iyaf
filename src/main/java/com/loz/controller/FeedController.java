@@ -1,5 +1,6 @@
 package com.loz.controller;
 
+import com.loz.dao.model.TweetData;
 import com.loz.dao.responseVo.*;
 import com.loz.service.FacebookService;
 import com.loz.service.TwitterFeedService;
@@ -7,7 +8,11 @@ import com.loz.service.TwitterService;
 import com.loz.service.VoucherService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +22,9 @@ import java.util.*;
 public class FeedController {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(FeedController.class);
+
+    @Value("${twitter.pagesize}")
+    private int PAGESIZE;
 
     @Autowired
     FacebookService facebookService;
@@ -29,6 +37,7 @@ public class FeedController {
 
     @Autowired
     TwitterFeedService twitterFeedService;
+
 
     @RequestMapping("/events")
     @ResponseBody
@@ -49,13 +58,28 @@ public class FeedController {
         return response;
     }
 
+    @RequestMapping("/tweets/{offset}")
+    @ResponseBody
+    public TweetResponse tweetsPaginated(@PathVariable("offset") int page) {
+        TweetResponse response = new TweetResponse();
+        response.setDate(new Date());
+        Pageable pageable = new PageRequest(page, PAGESIZE);
+        List<TweetData> tweets = twitterService.getTweets(pageable);
+        response.setData(tweets);
+        long total = twitterService.getTotal();
+        if ((page * PAGESIZE) + tweets.size() < total) {
+            page++;
+            response.setNext("/tweets/"+page);
+        } else {
+            response.setNext(null);
+        }
+        return response;
+    }
+
     @RequestMapping("/tweets")
     @ResponseBody
     public TweetResponse tweets() {
-        TweetResponse response = new TweetResponse();
-        response.setDate(new Date());
-        response.setData(twitterService.getTweets());
-        return response;
+        return tweetsPaginated(0);
     }
 
     @RequestMapping("/traders")
