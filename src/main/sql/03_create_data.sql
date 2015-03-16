@@ -10,3 +10,4 @@ INSERT INTO `foodfest`.`voucher` (`POSITION`, `TITLE`, `URL`) VALUES (3, 'Waitro
 INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (1376872062546481);
 INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (419705668122682);
 INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (339224867127);
+INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (1388656554692487);
