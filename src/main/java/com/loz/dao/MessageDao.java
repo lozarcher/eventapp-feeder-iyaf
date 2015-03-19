@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MessageDao extends JpaRepository<MessageData, Long> {
 
-    @Query("from MessageData order by createdDate desc")
+    @Query("from MessageData order by createdDate asc")
     List<MessageData> findMessagesOrderByDate(Pageable pageable);
 }
 
