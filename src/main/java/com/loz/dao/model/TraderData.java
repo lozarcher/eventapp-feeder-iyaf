@@ -29,6 +29,8 @@ public class TraderData implements Serializable{
     private String website;
     @Column(name = "PHONE")
     private String phone;
+    @Column(name = "KPOUND")
+    private boolean isKingstonPound;
 
     public TraderData() {
     }
@@ -97,6 +99,14 @@ public class TraderData implements Serializable{
         this.link = link;
     }
 
+    public boolean isKingstonPound() {
+        return isKingstonPound;
+    }
+
+    public void setKingstonPound(boolean isKingstonPound) {
+        this.isKingstonPound = isKingstonPound;
+    }
+
     public TraderData(Page page) {
         new TraderData();
         this.setId(page.getId());
@@ -111,5 +121,6 @@ public class TraderData implements Serializable{
         }
         this.setPhone(page.getPhone());
         this.setWebsite(page.getWebsite());
+        this.setKingstonPound(page.isKingstonPound());
     }
 }

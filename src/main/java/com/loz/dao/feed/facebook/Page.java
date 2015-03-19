@@ -12,6 +12,7 @@ public class Page {
     private String link;
     private String phone;
     private String website;
+    private boolean isKingstonPound;
 
     public Long getId() {
         return id;
@@ -75,5 +76,13 @@ public class Page {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public boolean isKingstonPound() {
+        return isKingstonPound;
+    }
+
+    public void setKingstonPound(boolean isKingstonPound) {
+        this.isKingstonPound = isKingstonPound;
     }
 }

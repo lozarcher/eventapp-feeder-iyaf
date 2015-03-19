@@ -71,6 +71,7 @@ public class FacebookFeedService {
         List<Page> traderPages = new ArrayList<Page>();
         for (TraderFeedData traderFeed : traderList) {
             Page traderPage = getPage(traderFeed.getId());
+            traderPage.setKingstonPound(traderFeed.isKingstonPound());
             traderPages.add(traderPage);
         }
         return traderPages;

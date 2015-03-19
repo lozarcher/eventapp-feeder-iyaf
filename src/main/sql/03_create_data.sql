@@ -7,7 +7,7 @@ INSERT INTO `foodfest`.`voucher` (`POSITION`, `TITLE`, `URL`) VALUES (7, 'Wether
 INSERT INTO `foodfest`.`voucher` (`POSITION`, `TITLE`, `URL`) VALUES (8, 'Surbiton Plaza', 'https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-725924976627/vouchers/SurbitonPlaza.png');
 INSERT INTO `foodfest`.`voucher` (`POSITION`, `TITLE`, `URL`) VALUES (3, 'Waitrose', 'https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-725924976627/vouchers/Waitrose.png');
 
-INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (1376872062546481);
-INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (419705668122682);
-INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (339224867127);
-INSERT INTO `foodfest`.`trader_feed` (`ID`) VALUES (1388656554692487);
+INSERT INTO `foodfest`.`trader_feed` (`ID`, `KPOUND`) VALUES (1376872062546481, 1);
+INSERT INTO `foodfest`.`trader_feed` (`ID`, `KPOUND`) VALUES (419705668122682, 1);
+INSERT INTO `foodfest`.`trader_feed` (`ID`, `KPOUND`) VALUES (339224867127,1 );
+INSERT INTO `foodfest`.`trader_feed` (`ID`, `KPOUND`) VALUES (1388656554692487, 0);

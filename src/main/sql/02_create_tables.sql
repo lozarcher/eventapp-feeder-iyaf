@@ -36,7 +36,8 @@ create table foodfest.venue (
 );
 drop table if exists foodfest.trader_feed;
 create table foodfest.trader_feed (
-	ID NUMERIC(20,0) NOT NULL PRIMARY KEY
+	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
+	KPOUND BIT(1) DEFAULT 0
 );
 drop table if exists foodfest.trader;
 create table foodfest.trader (
@@ -47,7 +48,8 @@ create table foodfest.trader (
   COVER_IMG varchar(255) null,
 	LINK varchar(255),
 	WEBSITE varchar(255),
-	PHONE varchar(255)
+	PHONE varchar(255),
+  KPOUND BIT(1) DEFAULT 0
 );
 drop table if exists foodfest.voucher;
 create table foodfest.voucher (

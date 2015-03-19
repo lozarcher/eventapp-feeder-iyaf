@@ -110,6 +110,7 @@ public class FeedController {
     @RequestMapping(value="/messages/post" , method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<MessageData> addNewWorker(@RequestBody MessageData jsonString) {
         MessageData messageData = jsonString;
+        LOGGER.debug("Received post with JSON: %s", jsonString);
         messageData.setCreatedDate(new Date());
         // Test for malformed json
         MessageData savedMessage = new MessageData();

@@ -18,6 +18,9 @@ public class TraderFeedData implements Serializable{
     @Column(name = "ID", unique = true)
     private Long id;
 
+    @Column(name = "KPOUND")
+    private boolean isKingstonPound;
+
     public TraderFeedData() {
     }
 
@@ -27,5 +30,13 @@ public class TraderFeedData implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isKingstonPound() {
+        return isKingstonPound;
+    }
+
+    public void setKingstonPound(boolean isKingstonPound) {
+        this.isKingstonPound = isKingstonPound;
     }
 }
