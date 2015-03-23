@@ -15,7 +15,7 @@ create table foodfest.tweet (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
       SCREEN_NAME varchar(255) null,
-      TEXT BLOB null,
+      TEXT VARCHAR(4000) CHARSET utf8,
       PROFILE_PIC varchar(255) null,
       CREATED_DATE TIMESTAMP not null
 );
