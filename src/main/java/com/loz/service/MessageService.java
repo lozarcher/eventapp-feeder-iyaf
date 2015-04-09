@@ -21,7 +21,7 @@ public class MessageService {
     MessageDao messageDao;
 
     public List<MessageData> getMessages(Pageable pageable) {
-        return messageDao.findMessagesOrderByDate(pageable);
+        return messageDao.findMessagesOrderByDateDesc(pageable);
     }
 
     public long getTotal() {

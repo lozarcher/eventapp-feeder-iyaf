@@ -62,7 +62,7 @@ drop table if exists foodfest.message;
 create table foodfest.message (
 	    ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       NAME varchar(255) null,
-      TEXT BLOB null,
+      TEXT VARCHAR(4000) CHARSET utf8,
       PROFILE_PIC varchar(255) null,
       CREATED_DATE TIMESTAMP not null
 );
