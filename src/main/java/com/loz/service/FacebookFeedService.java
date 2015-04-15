@@ -36,6 +36,9 @@ public class FacebookFeedService {
     @Value("${facebook.url.get_events}")
     private String URL_GET_EVENTS;
 
+    @Value("${facebook.url.get_events.since}")
+    private String URL_GET_EVENTS_SINCE;
+
     @Value("${facebook.url.get_events.filters}")
     private String URL_GET_EVENTS_FILTERS;
 
@@ -85,6 +88,7 @@ public class FacebookFeedService {
         boolean lastPage = false;
 
         String getEventsUrl = String.format(URL_GET_EVENTS, pageId, URL_GET_EVENTS_FILTERS, accessToken);
+        getEventsUrl += "&since="+URL_GET_EVENTS_SINCE;
         LOGGER.debug("Requesting from URL "+getEventsUrl);
 
         while (lastPage == false) {
@@ -111,6 +115,7 @@ public class FacebookFeedService {
                 String nextPage = response.getBody().getPaging().getNext();
                 if (nextPage != null) {
                     lastPage = false;
+                    nextPage += "&since="+URL_GET_EVENTS_SINCE;
                     getEventsUrl = nextPage;
                 } else {
                     lastPage = true;
