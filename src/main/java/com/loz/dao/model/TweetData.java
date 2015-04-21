@@ -1,5 +1,7 @@
 package com.loz.dao.model;
 
+import com.loz.dao.feed.twitter.Entities;
+import com.loz.dao.feed.twitter.Media;
 import com.loz.dao.feed.twitter.Status;
 import com.loz.dao.feed.twitter.User;
 import org.slf4j.Logger;
@@ -101,13 +103,23 @@ public class TweetData {
             this.setProfilePic(user.getProfile_image_url());
             DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
             try {
-                Date result =  df.parse(status.getCreated_at());
+                Date result = df.parse(status.getCreated_at());
                 this.setCreatedDate(result);
             } catch (ParseException e) {
                 e.printStackTrace();
                 LOGGER.error("Could not parse Tweet date {}", status.getCreated_at());
             }
         }
-        this.setText(status.getText());
+        String text = status.getText();
+        Entities entities = status.getEntities();
+        text = text.replaceAll("http[^\\s]+", "");
+        if (entities != null) {
+            if (entities.getMedia() != null) {
+                for (Media media : entities.getMedia()) {
+                    text += " " + media.getMedia_url();
+                }
+            }
+        }
+        this.setText(text);
     }
 }
