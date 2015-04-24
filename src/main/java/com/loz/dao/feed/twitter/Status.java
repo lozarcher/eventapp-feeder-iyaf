@@ -1,5 +1,7 @@
 package com.loz.dao.feed.twitter;
 
+import java.util.List;
+
 /**
  * Created by loz on 05/02/15.
  */
@@ -8,6 +10,7 @@ public class Status {
     private String text;
     private User user;
     private String created_at;
+    private Entities entities;
 
     public String getId_str() {
         return id_str;
@@ -39,5 +42,13 @@ public class Status {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public Entities getEntities() {
+        return entities;
+    }
+
+    public void setEntities(Entities entities) {
+        this.entities = entities;
     }
 }

@@ -33,9 +33,36 @@ public class MessageService {
         messageData.setCreatedDate(new Date());
         messageData.setName(name);
         messageData.setProfilePic(profilePic);
-        messageData.setText(text);
+        if (passesProfanityFilter(text)) {
+            messageData.setText(text);
+        } else {
+            messageData.setText("Message removed by profanity filter");
+        }
         MessageData saved = messageDao.save(messageData);
         return saved;
+    }
+
+    private boolean passesProfanityFilter(String text) {
+        text = text.toLowerCase();
+        if (text.indexOf("fuck") != -1) {
+            return false;
+        }
+        if (text.indexOf("cunt") != -1) {
+            return false;
+        }
+        if (text.indexOf("nigger") != -1) {
+            return false;
+        }
+        if (text.indexOf("bitch") != -1) {
+            return false;
+        }
+        if (text.indexOf("whore") != -1) {
+            return false;
+        }
+        if (text.indexOf("shit") != -1) {
+            return false;
+        }
+        return true;
     }
 
 
