@@ -40,7 +40,7 @@ public class FacebookService {
     private String GET_EVENTS_SINCE;
 
     public Iterable<EventData> getEvents() {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date sinceDate = null;
         try {
             sinceDate = format.parse(GET_EVENTS_SINCE);
@@ -62,7 +62,7 @@ public class FacebookService {
     }
 
     public Iterable<TraderData> getTraders() {
-        Iterable<TraderData> traders = traderDao.findAll();
+        Iterable<TraderData> traders = traderDao.findAllOrderByKPoundAndName();
         return traders;
     }
 
