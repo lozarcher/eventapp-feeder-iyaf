@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -36,21 +37,11 @@ public class FacebookService {
     @Autowired
     TraderDao traderDao;
 
-    @Value("${facebook.get_events.since}")
-    private String GET_EVENTS_SINCE;
-
     public Iterable<EventData> getEvents() {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date sinceDate = null;
-        try {
-            sinceDate = format.parse(GET_EVENTS_SINCE);
-        } catch (ParseException e) {
-            LOGGER.error("Cannot parse date {}", GET_EVENTS_SINCE);
-            return eventDao.findAllOrderByDate(new Date());
-        }
-        LOGGER.error("Getting events since {}", sinceDate);
-
-        return eventDao.findAllOrderByDate(sinceDate);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        LOGGER.error("Getting events since {}", cal.getTime());
+        return eventDao.findAllOrderByDate(cal.getTime());
     }
 
     public Iterable<VenueData> getVenues() {
