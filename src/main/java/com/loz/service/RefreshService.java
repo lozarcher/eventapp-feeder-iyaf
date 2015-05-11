@@ -103,11 +103,16 @@ public class RefreshService {
         }
         List<Status> statuses = twitterResponse.getStatuses();
         for (Status status : statuses) {
+            status.setText(removeUTFCharacters(status.getText()));
             TweetData tweetData = new TweetData(status);
             LOGGER.debug("Saving tweet {}", tweetData.getScreenName()+": "+tweetData.getText());
             tweetDao.save(tweetData);
         }
         updateLastRefresh("TWEET");
+    }
+
+    public static String removeUTFCharacters(String data){
+        return data.replaceAll("[^ -~]", "");
     }
 
     private void updateLastRefresh(String tableName) {
