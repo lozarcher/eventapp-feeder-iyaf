@@ -1,3 +1,3 @@
-create database foodfest;
+create database iyaf;
 
-GRANT ALL PRIVILEGES ON foodfest.* TO 'foodfest'@'%' IDENTIFIED BY '32lrorf0ef2' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON iyaf.* TO 'iyaf'@'%' IDENTIFIED BY 'iyaf2od021ikd' WITH GRANT OPTION;

@@ -118,7 +118,7 @@ public class EventData {
         this.setId(event.getId());
         this.setName(event.getName());
         this.setDescription(event.getDescription());
-        this.setLocation(event.getLocation());
+        this.setLocation(event.getPlace().getName());
         Cover cover = event.getCover();
         if (cover != null) {
             this.setCoverUrl(cover.getSource());
@@ -129,10 +129,10 @@ public class EventData {
         }
         this.setStartTime(event.getStart_time());
         this.setEndTime(event.getEnd_time());
-        if (event.getVenue() == null || event.getVenue().getId() == null) {
+        if (event.getPlace() == null || event.getPlace().getId() == null) {
             this.setVenue(null);
         } else {
-            VenueData venueData = new VenueData(event.getVenue());
+            VenueData venueData = new VenueData(event.getPlace());
             this.setVenue(venueData);
         }
     }

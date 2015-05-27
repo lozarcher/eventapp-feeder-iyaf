@@ -1,24 +1,18 @@
 package com.loz.service;
 
 import com.loz.dao.EventDao;
-import com.loz.dao.TraderDao;
+import com.loz.dao.PerformerDao;
 import com.loz.dao.VenueDao;
 import com.loz.dao.model.EventData;
-import com.loz.dao.model.TraderData;
+import com.loz.dao.model.PerformerData;
 import com.loz.dao.model.VenueData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by larcher on 13/02/2015.
@@ -35,11 +29,11 @@ public class FacebookService {
     VenueDao venueDao;
 
     @Autowired
-    TraderDao traderDao;
+    PerformerDao performerDao;
 
     public Iterable<EventData> getEvents() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
+        cal.add(Calendar.YEAR, -1);
         LOGGER.error("Getting events since {}", cal.getTime());
         return eventDao.findAllOrderByDate(cal.getTime());
     }
@@ -52,8 +46,8 @@ public class FacebookService {
         return venues;
     }
 
-    public Iterable<TraderData> getTraders() {
-        Iterable<TraderData> traders = traderDao.findAllOrderByKPoundAndName();
+    public Iterable<PerformerData> getPerformers() {
+        Iterable<PerformerData> traders = performerDao.findAllOrderByKPoundAndName();
         return traders;
     }
 

@@ -1,7 +1,6 @@
 package com.loz.dao.responseVo;
 
-import com.loz.dao.model.TraderData;
-import com.loz.dao.model.TweetData;
+import com.loz.dao.model.PerformerData;
 
 import java.util.Date;
 
@@ -10,7 +9,7 @@ import java.util.Date;
  */
 public class PageResponse {
     private Date date;
-    private Iterable<TraderData> data;
+    private Iterable<PerformerData> data;
 
     public Date getDate() {
         return date;
@@ -20,11 +19,11 @@ public class PageResponse {
         this.date = date;
     }
 
-    public Iterable<TraderData> getData() {
+    public Iterable<PerformerData> getData() {
         return data;
     }
 
-    public void setData(Iterable<TraderData> data) {
+    public void setData(Iterable<PerformerData> data) {
         this.data = data;
     }
 }

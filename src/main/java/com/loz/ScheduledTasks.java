@@ -28,9 +28,9 @@ public class ScheduledTasks {
     }
 
     @Scheduled(cron = "${cron.refresh.events}")
-    public void refreshTraders() {
-        LOGGER.debug("Refreshing Traders");
-        refreshService.updateTraders();
+    public void refreshPerformers() {
+        LOGGER.debug("Refreshing Performers");
+        refreshService.updatePerformers();
     }
 
     @Scheduled(cron = "${cron.refresh.tweets}")

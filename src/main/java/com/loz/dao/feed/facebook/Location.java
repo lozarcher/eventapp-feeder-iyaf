@@ -1,31 +1,15 @@
 package com.loz.dao.feed.facebook;
 
 /**
- * Created by loz on 23/02/15.
+ * Created by larcher on 27/05/2015.
  */
-public class Venue {
-    private Long id;
-    private String street;
+public class Location {
     private String city;
-    private String zip;
+    private String country;
     private Double latitude;
     private Double longitude;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
+    private String street;
+    private String zip;
 
     public String getCity() {
         return city;
@@ -35,12 +19,12 @@ public class Venue {
         this.city = city;
     }
 
-    public String getZip() {
-        return zip;
+    public String getCountry() {
+        return country;
     }
 
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Double getLatitude() {
@@ -57,5 +41,21 @@ public class Venue {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 }

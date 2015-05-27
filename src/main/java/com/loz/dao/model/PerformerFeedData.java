@@ -12,16 +12,13 @@ import java.io.Serializable;
  * Created by loz on 23/02/15.
  */
 @Entity
-@Table(name = "TRADER_FEED")
-public class TraderFeedData implements Serializable{
+@Table(name = "PERFORMER_FEED")
+public class PerformerFeedData implements Serializable{
     @Id
     @Column(name = "ID", unique = true)
     private Long id;
 
-    @Column(name = "KPOUND")
-    private boolean isKingstonPound;
-
-    public TraderFeedData() {
+    public PerformerFeedData() {
     }
 
     public Long getId() {
@@ -30,13 +27,5 @@ public class TraderFeedData implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public boolean isKingstonPound() {
-        return isKingstonPound;
-    }
-
-    public void setKingstonPound(boolean isKingstonPound) {
-        this.isKingstonPound = isKingstonPound;
     }
 }

@@ -1,7 +1,6 @@
 package com.loz.dao.model;
 
 import com.loz.dao.feed.facebook.Page;
-import com.loz.dao.feed.facebook.Venue;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,8 +9,8 @@ import java.io.Serializable;
  * Created by loz on 23/02/15.
  */
 @Entity
-@Table(name = "TRADER")
-public class TraderData implements Serializable{
+@Table(name = "PERFORMER")
+public class PerformerData implements Serializable{
     @Id
     @Column(name = "ID", unique = true)
     private Long id;
@@ -32,7 +31,7 @@ public class TraderData implements Serializable{
     @Column(name = "KPOUND")
     private boolean isKingstonPound;
 
-    public TraderData() {
+    public PerformerData() {
     }
 
     public Long getId() {
@@ -107,8 +106,8 @@ public class TraderData implements Serializable{
         this.isKingstonPound = isKingstonPound;
     }
 
-    public TraderData(Page page) {
-        new TraderData();
+    public PerformerData(Page page) {
+        new PerformerData();
         this.setId(page.getId());
         this.setName(page.getName());
         this.setAbout(page.getAbout());

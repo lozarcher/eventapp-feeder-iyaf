@@ -1,10 +1,9 @@
 package com.loz.service;
 
-import com.loz.dao.TraderDao;
 import com.loz.dao.TraderFeedDao;
 import com.loz.dao.feed.facebook.EventResponse;
 import com.loz.dao.feed.facebook.Page;
-import com.loz.dao.model.TraderFeedData;
+import com.loz.dao.model.PerformerFeedData;
 import com.loz.exception.FacebookAccessException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,14 +69,14 @@ public class FacebookFeedService {
     }
 
     public List<Page> getPages() throws FacebookAccessException {
-        Iterable<TraderFeedData> traderList = traderFeedDao.findAll();
-        List<Page> traderPages = new ArrayList<Page>();
-        for (TraderFeedData traderFeed : traderList) {
-            Page traderPage = getPage(traderFeed.getId());
-            traderPage.setKingstonPound(traderFeed.isKingstonPound());
-            traderPages.add(traderPage);
+        Iterable<PerformerFeedData> performerList = traderFeedDao.findAll();
+        List<Page> performerPages = new ArrayList<Page>();
+        for (PerformerFeedData performerFeed : performerList) {
+            Page performerPage = getPage(performerFeed.getId());
+            performerPage.setKingstonPound(false);
+            performerPages.add(performerPage);
         }
-        return traderPages;
+        return performerPages;
     }
 
     public EventResponse getEvents() throws FacebookAccessException {

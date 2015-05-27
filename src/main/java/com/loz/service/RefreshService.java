@@ -6,7 +6,7 @@ import com.loz.dao.feed.facebook.EventResponse;
 import com.loz.dao.feed.facebook.Page;
 import com.loz.dao.model.EventData;
 import com.loz.dao.model.LastRefreshData;
-import com.loz.dao.model.TraderData;
+import com.loz.dao.model.PerformerData;
 import com.loz.exception.FacebookAccessException;
 import com.loz.dao.model.TweetData;
 import com.loz.dao.feed.twitter.Status;
@@ -46,7 +46,7 @@ public class RefreshService {
     TweetDao tweetDao;
 
     @Autowired
-    TraderDao traderDao;
+    PerformerDao performerDao;
 
     @Autowired
     LastRefreshDao lastRefreshDao;
@@ -75,20 +75,20 @@ public class RefreshService {
     }
 
     @Transactional
-    public void updateTraders() {
+    public void updatePerformers() {
         List<Page> traders = new ArrayList<Page>();
         try {
             traders = facebookFeedService.getPages();
         } catch (FacebookAccessException e) {
-            LOGGER.error("Cannot retrieve traders",e);
-            throw new RuntimeException("Cannot retrieve traders");
+            LOGGER.error("Cannot retrieve performer",e);
+            throw new RuntimeException("Cannot retrieve performer");
         }
         for (Page page : traders) {
-            TraderData traderData = new TraderData(page);
-            LOGGER.debug("Saving trader {}", traderData.getName());
-            traderDao.save(traderData);
+            PerformerData performerData = new PerformerData(page);
+            LOGGER.debug("Saving performer {}", performerData.getName());
+            performerDao.save(performerData);
         }
-        updateLastRefresh("TRADER");
+        updateLastRefresh("PERFORMER");
     }
 
 

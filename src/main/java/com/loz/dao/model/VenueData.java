@@ -1,6 +1,6 @@
 package com.loz.dao.model;
 
-import com.loz.dao.feed.facebook.Venue;
+import com.loz.dao.feed.facebook.Place;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -87,13 +87,13 @@ public class VenueData implements Serializable{
         this.location = location;
     }
 
-    public VenueData(Venue venue) {
+    public VenueData(Place place) {
         new VenueData();
-        this.setId(venue.getId());
-        this.setStreet(venue.getStreet());
-        this.setCity(venue.getCity());
-        this.setPostcode(venue.getZip());
-        this.setLatitude(venue.getLatitude());
-        this.setLongitude(venue.getLongitude());
+        this.setId(place.getId());
+        this.setStreet(place.getLocation().getStreet());
+        this.setCity(place.getLocation().getCity());
+        this.setPostcode(place.getLocation().getZip());
+        this.setLatitude(place.getLocation().getLatitude());
+        this.setLongitude(place.getLocation().getLongitude());
     }
 }

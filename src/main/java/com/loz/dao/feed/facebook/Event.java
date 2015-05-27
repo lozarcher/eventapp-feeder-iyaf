@@ -14,7 +14,7 @@ public class Event {
     private Date start_time;
     private Date end_time;
     private String location;
-    private Venue venue;
+    private Place place;
 
     public Long getId() {
         return id;
@@ -72,12 +72,12 @@ public class Event {
         this.location = location;
     }
 
-    public Venue getVenue() {
-        return venue;
+    public Place getPlace() {
+        return place;
     }
 
-    public void setVenue(Venue venue) {
-        this.venue= venue;
+    public void setPlace(Place place) {
+        this.place = place;
     }
 
     public Picture getPicture() {
