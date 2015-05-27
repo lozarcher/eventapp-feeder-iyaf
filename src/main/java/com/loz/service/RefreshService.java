@@ -1,14 +1,13 @@
 package com.loz.service;
 
 import com.loz.dao.*;
-import com.loz.dao.feed.facebook.Event;
-import com.loz.dao.feed.facebook.EventResponse;
-import com.loz.dao.feed.facebook.Page;
-import com.loz.dao.model.EventData;
-import com.loz.dao.model.LastRefreshData;
-import com.loz.dao.model.PerformerData;
+import com.loz.dao.feed.facebook.event.Event;
+import com.loz.dao.feed.facebook.event.EventResponse;
+import com.loz.dao.feed.facebook.news.Post;
+import com.loz.dao.feed.facebook.news.PostResponse;
+import com.loz.dao.feed.facebook.page.Page;
+import com.loz.dao.model.*;
 import com.loz.exception.FacebookAccessException;
-import com.loz.dao.model.TweetData;
 import com.loz.dao.feed.twitter.Status;
 import com.loz.dao.feed.twitter.TwitterResponse;
 import com.loz.exception.TwitterAccessException;
@@ -38,6 +37,9 @@ public class RefreshService {
 
     @Autowired
     EventDao eventDao;
+
+    @Autowired
+    PostDao postDao;
 
     @Autowired
     VenueDao venueDao;
@@ -72,6 +74,28 @@ public class RefreshService {
         }
         updateLastRefresh("EVENT");
         updateLastRefresh("VENUE");
+    }
+
+    @Transactional
+    public void updatePosts() {
+        PostResponse postResponse;
+        try {
+            postResponse = facebookFeedService.getPosts();
+        } catch (FacebookAccessException e) {
+            LOGGER.error("Cannot retrieve posts",e);
+            throw new RuntimeException("Cannot retrieve posts");
+        }
+        List<Post> postList = postResponse.getData();
+        for (Post post : postList) {
+            PostData postData = postDao.findOne(post.getId());
+            if (postData == null) {
+                postData = new PostData();
+            }
+            postData.setDataFromPost(post);
+            LOGGER.debug("Saving post {}", post.getMessage());
+            postDao.save(postData);
+        }
+        updateLastRefresh("POST");
     }
 
     @Transactional

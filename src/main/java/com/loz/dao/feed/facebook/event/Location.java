@@ -1,4 +1,4 @@
-package com.loz.dao.feed.facebook;
+package com.loz.dao.feed.facebook.event;
 
 /**
  * Created by larcher on 27/05/2015.

@@ -1,4 +1,7 @@
-package com.loz.dao.feed.facebook;
+package com.loz.dao.feed.facebook.page;
+
+import com.loz.dao.feed.facebook.common.Picture;
+import com.loz.dao.feed.facebook.common.Cover;
 
 /**
  * Created by larcher on 13/03/2015.

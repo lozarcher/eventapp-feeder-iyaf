@@ -33,6 +33,12 @@ public class ScheduledTasks {
         refreshService.updatePerformers();
     }
 
+    @Scheduled(cron = "${cron.refresh.events}")
+    public void refreshPosts() {
+        LOGGER.debug("Refreshing Posts");
+        refreshService.updatePosts();
+    }
+
     @Scheduled(cron = "${cron.refresh.tweets}")
     public void refreshTweets() {
         LOGGER.debug("Refreshing Tweets");

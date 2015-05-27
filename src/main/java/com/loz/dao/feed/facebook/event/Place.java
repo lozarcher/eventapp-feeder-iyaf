@@ -1,4 +1,6 @@
-package com.loz.dao.feed.facebook;
+package com.loz.dao.feed.facebook.event;
+
+import com.loz.dao.feed.facebook.event.Location;
 
 /**
  * Created by loz on 23/02/15.

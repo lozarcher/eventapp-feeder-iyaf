@@ -18,6 +18,7 @@ public class AdminController {
     public String refreshData() {
         scheduledTasks.refreshEvents();
         scheduledTasks.refreshTweets();
+        scheduledTasks.refreshPosts();
         scheduledTasks.refreshPerformers();
         LOGGER.info("/refresh called - done");
         return "Refresh done";

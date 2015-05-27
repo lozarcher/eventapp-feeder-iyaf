@@ -1,6 +1,8 @@
-package com.loz.dao.feed.facebook;
+package com.loz.dao.feed.facebook.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.loz.dao.feed.facebook.common.Cover;
+import com.loz.dao.feed.facebook.common.Picture;
 
 import java.util.Date;
 

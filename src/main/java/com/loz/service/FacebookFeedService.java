@@ -1,8 +1,9 @@
 package com.loz.service;
 
 import com.loz.dao.TraderFeedDao;
-import com.loz.dao.feed.facebook.EventResponse;
-import com.loz.dao.feed.facebook.Page;
+import com.loz.dao.feed.facebook.event.EventResponse;
+import com.loz.dao.feed.facebook.news.PostResponse;
+import com.loz.dao.feed.facebook.page.Page;
 import com.loz.dao.model.PerformerFeedData;
 import com.loz.exception.FacebookAccessException;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,13 @@ public class FacebookFeedService {
     @Value("${facebook.url.get_events.since}")
     private String URL_GET_EVENTS_SINCE;
 
-    @Value("${facebook.url.get_events.filters}")
+    @Value("${facebook.url.get_posts.filters}")
+    private String URL_GET_POSTS_FILTERS;
+
+    @Value("${facebook.url.get_posts}")
+    private String URL_GET_POSTS;
+
+    @Value("${facebook.url.get_posts.filters}")
     private String URL_GET_EVENTS_FILTERS;
 
     @Value("${facebook.url.get_page}")
@@ -77,6 +84,51 @@ public class FacebookFeedService {
             performerPages.add(performerPage);
         }
         return performerPages;
+    }
+
+    public PostResponse getPosts() throws FacebookAccessException {
+        PostResponse paginatedPostResponse = new PostResponse();
+        RestTemplate restTemplate = new RestTemplate();
+        String accessToken = facebookAccessTokenService.getToken();
+
+        boolean lastPage = false;
+
+        String getPostsUrl = String.format(URL_GET_POSTS, pageId, URL_GET_POSTS_FILTERS, accessToken);
+        getPostsUrl += "&since="+URL_GET_EVENTS_SINCE;
+        LOGGER.debug("Requesting from URL "+getPostsUrl);
+
+        while (lastPage == false) {
+            ResponseEntity<PostResponse> response = null;
+            try {
+                response = restTemplate.getForEntity(URLDecoder.decode(getPostsUrl, "UTF-8"), PostResponse.class);
+            } catch (UnsupportedEncodingException e) {
+                LOGGER.error("URL syntax invalid " + getPostsUrl);
+                throw new FacebookAccessException(e.getMessage());
+            }
+            if (!response.getStatusCode().equals(HttpStatus.OK)) {
+                LOGGER.error("Facebook access error");
+                throw new FacebookAccessException("Status code "+response.getStatusCode());
+            }
+            if (paginatedPostResponse.getData() == null) {
+                paginatedPostResponse = response.getBody();
+            } else {
+                paginatedPostResponse.addData(response.getBody().getData());
+            }
+
+
+            lastPage = true;
+            if (response.getBody().getPaging() != null) {
+                String nextPage = response.getBody().getPaging().getNext();
+                if (nextPage != null) {
+                    lastPage = false;
+                    nextPage += "&since="+URL_GET_EVENTS_SINCE;
+                    getPostsUrl = nextPage;
+                } else {
+                    lastPage = true;
+                }
+            }
+        }
+        return paginatedPostResponse;
     }
 
     public EventResponse getEvents() throws FacebookAccessException {
@@ -123,5 +175,6 @@ public class FacebookFeedService {
         }
         return paginatedEventResponse;
     }
+
 }
 

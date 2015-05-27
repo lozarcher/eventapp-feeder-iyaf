@@ -1,8 +1,8 @@
 package com.loz.dao.model;
 
-import com.loz.dao.feed.facebook.Cover;
-import com.loz.dao.feed.facebook.Event;
-import com.loz.dao.feed.facebook.Picture;
+import com.loz.dao.feed.facebook.common.Cover;
+import com.loz.dao.feed.facebook.event.Event;
+import com.loz.dao.feed.facebook.common.Picture;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -118,7 +118,9 @@ public class EventData {
         this.setId(event.getId());
         this.setName(event.getName());
         this.setDescription(event.getDescription());
-        this.setLocation(event.getPlace().getName());
+        if (event.getPlace() != null) {
+            this.setLocation(event.getPlace().getName());
+        }
         Cover cover = event.getCover();
         if (cover != null) {
             this.setCoverUrl(cover.getSource());

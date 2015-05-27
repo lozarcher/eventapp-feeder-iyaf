@@ -1,6 +1,6 @@
 package com.loz.dao.model;
 
-import com.loz.dao.feed.facebook.Page;
+import com.loz.dao.feed.facebook.page.Page;
 
 import javax.persistence.*;
 import java.io.Serializable;

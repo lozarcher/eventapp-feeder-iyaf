@@ -1,7 +1,5 @@
 package com.loz.dao.model;
 
-import com.loz.dao.feed.facebook.Page;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

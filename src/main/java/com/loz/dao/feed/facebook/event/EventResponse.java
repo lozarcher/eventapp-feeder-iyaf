@@ -1,4 +1,6 @@
-package com.loz.dao.feed.facebook;
+package com.loz.dao.feed.facebook.event;
+
+import com.loz.dao.feed.facebook.common.Paging;
 
 import java.util.List;
 

@@ -50,3 +50,16 @@ create table iyaf.performer (
 	PHONE varchar(255),
   KPOUND BIT(1) DEFAULT 0
 );
+drop table if exists iyaf.post;
+create table iyaf.post (
+	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
+  MESSAGE varchar(4000) CHARSET utf8,
+  PICTURE varchar(255) null,
+  LINK varchar(255) null,
+	NAME varchar(255) null,
+	CAPTION varchar(4000) null,
+	CREATED_DATE TIMESTAMP NOT NULL
+);
+
+
+

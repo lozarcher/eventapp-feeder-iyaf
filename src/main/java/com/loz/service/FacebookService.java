@@ -2,13 +2,13 @@ package com.loz.service;
 
 import com.loz.dao.EventDao;
 import com.loz.dao.PerformerDao;
+import com.loz.dao.PostDao;
 import com.loz.dao.VenueDao;
-import com.loz.dao.model.EventData;
-import com.loz.dao.model.PerformerData;
-import com.loz.dao.model.VenueData;
+import com.loz.dao.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -26,6 +26,9 @@ public class FacebookService {
     EventDao eventDao;
 
     @Autowired
+    PostDao postDao;
+
+    @Autowired
     VenueDao venueDao;
 
     @Autowired
@@ -36,6 +39,14 @@ public class FacebookService {
         cal.add(Calendar.YEAR, -1);
         LOGGER.error("Getting events since {}", cal.getTime());
         return eventDao.findAllOrderByDate(cal.getTime());
+    }
+
+    public List<PostData> getPosts(Pageable pageable) {
+        return postDao.findPostsOrderByDate(pageable);
+    }
+
+    public long getTotalPosts() {
+        return postDao.count();
     }
 
     public Iterable<VenueData> getVenues() {

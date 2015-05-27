@@ -1,5 +1,6 @@
 package com.loz.controller;
 
+import com.loz.dao.model.PostData;
 import com.loz.dao.model.TweetData;
 import com.loz.dao.responseVo.*;
 import com.loz.service.*;
@@ -51,6 +52,30 @@ public class FeedController {
         response.setDate(new Date());
         response.setData(voucherService.getVouchers());
         return response;
+    }
+
+    @RequestMapping("/posts/{offset}")
+    @ResponseBody
+    public PostResponse postsPaginated(@PathVariable("offset") int page) {
+        PostResponse response = new PostResponse();
+        response.setDate(new Date());
+        Pageable pageable = new PageRequest(page, PAGESIZE);
+        List<PostData> posts = facebookService.getPosts(pageable);
+        response.setData(posts);
+        long total = facebookService.getTotalPosts();
+        if ((page * PAGESIZE) + posts.size() < total) {
+            page++;
+            response.setNext("/posts/"+page);
+        } else {
+            response.setNext(null);
+        }
+        return response;
+    }
+
+    @RequestMapping("/posts")
+    @ResponseBody
+    public PostResponse posts() {
+        return postsPaginated(0);
     }
 
     @RequestMapping("/tweets/{offset}")

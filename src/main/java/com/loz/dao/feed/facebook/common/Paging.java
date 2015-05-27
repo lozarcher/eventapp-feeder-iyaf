@@ -1,4 +1,4 @@
-package com.loz.dao.feed.facebook;
+package com.loz.dao.feed.facebook.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
