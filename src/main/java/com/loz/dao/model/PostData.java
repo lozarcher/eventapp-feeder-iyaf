@@ -103,7 +103,7 @@ public class PostData {
         this.setMessage(post.getMessage());
         this.setCaption(post.getCaption());
         this.setLink(post.getLink());
-        this.setPictureUrl(post.getPictureUrl());
+        this.setPictureUrl(post.getPicture());
         this.setName(post.getName());
    }
 }

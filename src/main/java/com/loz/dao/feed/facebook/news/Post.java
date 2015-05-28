@@ -8,7 +8,7 @@ import java.util.Date;
 public class Post {
     private String id;
     private String message;
-    private String pictureUrl;
+    private String picture;
     private String link;
     private String name;
     private String caption;
@@ -35,12 +35,12 @@ public class Post {
         this.message = message;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getLink() {
