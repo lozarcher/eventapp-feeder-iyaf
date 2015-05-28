@@ -99,7 +99,7 @@ public class PostData {
 
     public void setDataFromPost(Post post) {
         this.setId(post.getId());
-        this.setCreatedDate(post.getCreatedTime());
+        this.setCreatedDate(post.getCreated_time());
         this.setMessage(post.getMessage());
         this.setCaption(post.getCaption());
         this.setLink(post.getLink());

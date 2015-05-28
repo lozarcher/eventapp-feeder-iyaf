@@ -12,7 +12,7 @@ public class Post {
     private String link;
     private String name;
     private String caption;
-    private Date createdTime;
+    private Date created_time;
 
     public Long getId() {
         String[] ids = id.split("_");
@@ -67,11 +67,11 @@ public class Post {
         this.caption = caption;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreated_time() {
+        return created_time;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreated_time(Date created_time) {
+        this.created_time = created_time;
     }
 }

@@ -45,6 +45,9 @@ public class FacebookFeedService {
     @Value("${facebook.url.get_posts}")
     private String URL_GET_POSTS;
 
+    @Value("${facebook.url.get_posts.since}")
+    private String URL_GET_POSTS_SINCE;
+
     @Value("${facebook.url.get_posts.filters}")
     private String URL_GET_EVENTS_FILTERS;
 
@@ -121,7 +124,7 @@ public class FacebookFeedService {
                 String nextPage = response.getBody().getPaging().getNext();
                 if (nextPage != null) {
                     lastPage = false;
-                    nextPage += "&since="+URL_GET_EVENTS_SINCE;
+                    nextPage += "&since="+URL_GET_POSTS_SINCE;
                     getPostsUrl = nextPage;
                 } else {
                     lastPage = true;
