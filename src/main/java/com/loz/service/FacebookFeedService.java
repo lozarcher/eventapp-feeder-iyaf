@@ -48,7 +48,7 @@ public class FacebookFeedService {
     @Value("${facebook.url.get_posts.since}")
     private String URL_GET_POSTS_SINCE;
 
-    @Value("${facebook.url.get_posts.filters}")
+    @Value("${facebook.url.get_events.filters}")
     private String URL_GET_EVENTS_FILTERS;
 
     @Value("${facebook.url.get_page}")
