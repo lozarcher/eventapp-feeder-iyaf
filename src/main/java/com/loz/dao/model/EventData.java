@@ -25,10 +25,10 @@ public class EventData {
     private String coverUrl;
 
     @Column(name = "COVER_OFFSET_X")
-    private Integer coverOffestX;
+    private Integer coverOffsetX;
 
     @Column(name = "COVER_OFFSET_Y")
-    private Integer coverOffestY;
+    private Integer coverOffsetY;
 
     @Column(name = "PROFILE_URL")
     private String profileUrl;
@@ -120,20 +120,20 @@ public class EventData {
         this.profileUrl = profileUrl;
     }
 
-    public Integer getCoverOffestX() {
-        return coverOffestX;
+    public Integer getCoverOffsetY() {
+        return coverOffsetY;
     }
 
-    public void setCoverOffestX(Integer coverOffestX) {
-        this.coverOffestX = coverOffestX;
+    public void setCoverOffsetY(Integer coverOffsetY) {
+        this.coverOffsetY = coverOffsetY;
     }
 
-    public Integer getCoverOffestY() {
-        return coverOffestY;
+    public Integer getCoverOffsetX() {
+        return coverOffsetX;
     }
 
-    public void setCoverOffestY(Integer coverOffestY) {
-        this.coverOffestY = coverOffestY;
+    public void setCoverOffsetX(Integer coverOffsetX) {
+        this.coverOffsetX = coverOffsetX;
     }
 
     public void setDataFromEvent(Event event) {
@@ -147,8 +147,8 @@ public class EventData {
         if (cover != null) {
             this.setCoverUrl(cover.getSource());
         }
-        this.setCoverOffestX(cover.getOffset_x());
-        this.setCoverOffestY(cover.getOffset_y());
+        this.setCoverOffsetX(cover.getOffset_x());
+        this.setCoverOffsetY(cover.getOffset_y());
         Picture picture = event.getPicture();
         if (picture != null) {
             this.setProfileUrl(picture.getData().getUrl());
