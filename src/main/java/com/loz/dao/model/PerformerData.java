@@ -134,9 +134,9 @@ public class PerformerData implements Serializable{
         this.setLink(page.getLink());
         if (page.getCover() != null) {
             this.setCoverImg(page.getCover().getSource());
+            this.setCoverOffestX(page.getCover().getOffset_x());
+            this.setCoverOffestY(page.getCover().getOffset_y());
         }
-        this.setCoverOffestX(page.getCover().getOffset_x());
-        this.setCoverOffestY(page.getCover().getOffset_y());
         if (page.getPicture() != null) {
             this.setProfileImg(page.getPicture().getData().getUrl());
         }
