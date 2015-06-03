@@ -20,6 +20,10 @@ public class PerformerData implements Serializable{
     private String about;
     @Column(name = "COVER_IMG")
     private String coverImg;
+    @Column(name = "COVER_OFFSET_X")
+    private Integer coverOffestX;
+    @Column(name = "COVER_OFFSET_Y")
+    private Integer coverOffestY;
     @Column(name = "LINK")
     private String link;
     @Column(name = "PROFILE_IMG")
@@ -106,6 +110,22 @@ public class PerformerData implements Serializable{
         this.isKingstonPound = isKingstonPound;
     }
 
+    public Integer getCoverOffestX() {
+        return coverOffestX;
+    }
+
+    public void setCoverOffestX(Integer coverOffestX) {
+        this.coverOffestX = coverOffestX;
+    }
+
+    public Integer getCoverOffestY() {
+        return coverOffestY;
+    }
+
+    public void setCoverOffestY(Integer coverOffestY) {
+        this.coverOffestY = coverOffestY;
+    }
+
     public PerformerData(Page page) {
         new PerformerData();
         this.setId(page.getId());
@@ -115,6 +135,8 @@ public class PerformerData implements Serializable{
         if (page.getCover() != null) {
             this.setCoverImg(page.getCover().getSource());
         }
+        this.setCoverOffestX(page.getCover().getOffset_x());
+        this.setCoverOffestY(page.getCover().getOffset_y());
         if (page.getPicture() != null) {
             this.setProfileImg(page.getPicture().getData().getUrl());
         }

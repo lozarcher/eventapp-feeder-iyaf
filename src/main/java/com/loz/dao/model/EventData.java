@@ -24,6 +24,12 @@ public class EventData {
     @Column(name = "COVER_URL")
     private String coverUrl;
 
+    @Column(name = "COVER_OFFSET_X")
+    private Integer coverOffestX;
+
+    @Column(name = "COVER_OFFSET_Y")
+    private Integer coverOffestY;
+
     @Column(name = "PROFILE_URL")
     private String profileUrl;
 
@@ -114,6 +120,22 @@ public class EventData {
         this.profileUrl = profileUrl;
     }
 
+    public Integer getCoverOffestX() {
+        return coverOffestX;
+    }
+
+    public void setCoverOffestX(Integer coverOffestX) {
+        this.coverOffestX = coverOffestX;
+    }
+
+    public Integer getCoverOffestY() {
+        return coverOffestY;
+    }
+
+    public void setCoverOffestY(Integer coverOffestY) {
+        this.coverOffestY = coverOffestY;
+    }
+
     public void setDataFromEvent(Event event) {
         this.setId(event.getId());
         this.setName(event.getName());
@@ -125,6 +147,8 @@ public class EventData {
         if (cover != null) {
             this.setCoverUrl(cover.getSource());
         }
+        this.setCoverOffestX(cover.getOffset_x());
+        this.setCoverOffestY(cover.getOffset_y());
         Picture picture = event.getPicture();
         if (picture != null) {
             this.setProfileUrl(picture.getData().getUrl());
