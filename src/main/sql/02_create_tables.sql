@@ -2,7 +2,7 @@ drop table if exists iyaf.event;
 create table iyaf.event (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
-      DESCRIPTION varchar(4000) null,
+      DESCRIPTION varchar(4000) CHARSET utf8,
       PROFILE_URL varchar(255) null,
       COVER_URL varchar(255) null,
       COVER_OFFSET_X INT null,
