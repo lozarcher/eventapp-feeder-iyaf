@@ -146,9 +146,9 @@ public class EventData {
         Cover cover = event.getCover();
         if (cover != null) {
             this.setCoverUrl(cover.getSource());
+            this.setCoverOffsetX(cover.getOffset_x());
+            this.setCoverOffsetY(cover.getOffset_y());
         }
-        this.setCoverOffsetX(cover.getOffset_x());
-        this.setCoverOffsetY(cover.getOffset_y());
         Picture picture = event.getPicture();
         if (picture != null) {
             this.setProfileUrl(picture.getData().getUrl());
