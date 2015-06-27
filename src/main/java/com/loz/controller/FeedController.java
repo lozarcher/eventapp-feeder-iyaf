@@ -120,4 +120,10 @@ public class FeedController {
         return response;
     }
 
+    @RequestMapping(value="/iyaf.ics", produces="text/calendar")
+    @ResponseBody
+    public String iCal() {
+        return facebookService.getEventsAsICal();
+    }
+
 }
