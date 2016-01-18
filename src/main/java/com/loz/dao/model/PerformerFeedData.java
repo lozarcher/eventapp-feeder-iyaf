@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by loz on 23/02/15.
  */
 @Entity
-@Table(name = "PERFORMER_FEED")
+@Table(name = "TRADER_FEED")
 public class PerformerFeedData implements Serializable{
     @Id
     @Column(name = "ID", unique = true)

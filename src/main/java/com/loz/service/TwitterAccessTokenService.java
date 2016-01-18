@@ -58,6 +58,7 @@ public class TwitterAccessTokenService {
         URL obj = null;
         try {
             obj = new URL(urlGetToken);
+            LOGGER.info("Using URL "+urlGetToken);
         } catch (MalformedURLException e) {
             throw new TwitterAccessException("Cannot create URL from "+urlGetToken);
         }

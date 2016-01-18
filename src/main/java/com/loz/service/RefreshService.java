@@ -91,6 +91,10 @@ public class RefreshService {
             if (postData == null) {
                 postData = new PostData();
             }
+
+            if (post.getMessage() != null) {
+                post.setMessage(removeUTFCharacters(post.getMessage()));
+            }
             postData.setDataFromPost(post);
             LOGGER.debug("Saving post {}", post.getMessage());
             postDao.save(postData);

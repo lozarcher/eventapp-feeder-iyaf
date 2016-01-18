@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by loz on 23/02/15.
  */
 @Entity
-@Table(name = "PERFORMER")
+@Table(name = "TRADER")
 public class PerformerData implements Serializable{
     @Id
     @Column(name = "ID", unique = true)
