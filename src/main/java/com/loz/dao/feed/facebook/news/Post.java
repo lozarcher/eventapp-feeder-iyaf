@@ -2,13 +2,10 @@ package com.loz.dao.feed.facebook.news;
 
 import java.util.Date;
 
-/**
- * Created by larcher on 27/05/2015.
- */
 public class Post {
     private String id;
     private String message;
-    private String picture;
+    private String full_picture;
     private String link;
     private String name;
     private String caption;
@@ -35,12 +32,12 @@ public class Post {
         this.message = message;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getFull_picture() {
+        return full_picture;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setFull_picture(String full_picture) {
+        this.full_picture = full_picture;
     }
 
     public String getLink() {
