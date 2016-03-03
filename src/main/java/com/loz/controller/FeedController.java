@@ -120,6 +120,15 @@ public class FeedController {
         return response;
     }
 
+    @RequestMapping("/gallery")
+    @ResponseBody
+    public GalleryResponse gallery() {
+        GalleryResponse response = new GalleryResponse();
+        response.setDate(new Date());
+        response.setData(facebookService.getGallery());
+        return response;
+    }
+
     @RequestMapping(value="/iyaf.ics", produces="text/calendar")
     @ResponseBody
     public String iCal() {

@@ -80,3 +80,12 @@ create table foodfest.post (
 	CAPTION varchar(4000) null,
 	CREATED_DATE TIMESTAMP NOT NULL
 );
+drop table if exists foodfest.gallery;
+create table foodfest.gallery (
+	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
+  PICTURE varchar(1000) null,
+  THUMB varchar(1000) null,
+	USER varchar(255) CHARSET utf8,
+	CAPTION varchar(4000) CHARSET utf8,
+	CREATED_DATE TIMESTAMP NOT NULL
+);

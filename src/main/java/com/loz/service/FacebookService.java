@@ -1,9 +1,6 @@
 package com.loz.service;
 
-import com.loz.dao.EventDao;
-import com.loz.dao.PerformerDao;
-import com.loz.dao.PostDao;
-import com.loz.dao.VenueDao;
+import com.loz.dao.*;
 import com.loz.dao.model.*;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
@@ -39,6 +36,9 @@ public class FacebookService {
     @Autowired
     PerformerDao performerDao;
 
+    @Autowired
+    GalleryDao galleryDao;
+
     public Iterable<EventData> getEvents() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -67,6 +67,11 @@ public class FacebookService {
     public Iterable<PerformerData> getPerformers() {
         Iterable<PerformerData> traders = performerDao.findAllOrderByKPoundAndName();
         return traders;
+    }
+
+    public Iterable<GalleryData> getGallery() {
+        Iterable<GalleryData> gallery = galleryDao.findAllOrderByDate();
+        return gallery;
     }
 
     private String getLocationForVenue(VenueData venueData) {
