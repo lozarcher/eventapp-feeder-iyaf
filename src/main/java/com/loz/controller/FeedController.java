@@ -13,6 +13,7 @@ import com.loz.dao.model.TweetData;
 import com.loz.dao.responseVo.*;
 import com.loz.service.*;
 import org.apache.http.HttpResponse;
+import org.imgscalr.Scalr;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -188,12 +191,30 @@ public class FeedController {
                 String url = s3Url+s3Bucket+"/"+s3Filename;
                 LOGGER.debug("URL: "+url);
 
+                String previewFilename = filename.replaceFirst("\\.", "_thumb.");
+                String s3PreviewFilename = s3Folder+"/"+previewFilename;
+
+                BufferedImage img = ImageIO.read(s3File); // load image
+                //resize to 150 pixels max
+                BufferedImage thumbnail = Scalr.resize(img, 400);
+                File thumbFile = new File( System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
+                        previewFilename);
+                ImageIO.write(thumbnail, "jpg", thumbFile);
+                String thumbUrl = s3Url+s3Bucket+"/"+s3PreviewFilename;
+
+                PutObjectResult thumbResult = s3client.putObject(new PutObjectRequest(s3Bucket, s3PreviewFilename,
+                        thumbFile)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+
+                LOGGER.debug("Result: "+thumbResult.toString());
+                LOGGER.debug("Thumb URL: "+thumbUrl);
+
                 GalleryData galleryData = new GalleryData();
                 galleryData.setCaption(caption);
                 galleryData.setUser(name);
                 galleryData.setCreatedDate(new Date());
                 galleryData.setPicture(url);
-                galleryData.setThumb(url);
+                galleryData.setThumb(thumbUrl);
                 facebookService.saveGallery(galleryData);
                 return gallery();
             }
