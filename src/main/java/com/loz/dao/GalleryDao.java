@@ -13,6 +13,9 @@ import java.util.List;
 public interface GalleryDao extends CrudRepository<GalleryData, Long> {
 
     @Query("from GalleryData where moderated=1 order by createdDate desc")
+    List<GalleryData> findModeratedOrderByDate();
+
+    @Query("from GalleryData order by createdDate desc")
     List<GalleryData> findAllOrderByDate();
 }
 

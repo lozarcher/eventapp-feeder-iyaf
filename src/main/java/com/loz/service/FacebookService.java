@@ -9,6 +9,7 @@ import net.fortuna.ical4j.model.property.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,9 @@ public class FacebookService {
 
     @Autowired
     GalleryDao galleryDao;
+
+    @Value("${gallery.moderate}")
+    private boolean galleryModerate;
 
     public Iterable<EventData> getEvents() {
         Calendar cal = Calendar.getInstance();
@@ -70,8 +74,11 @@ public class FacebookService {
     }
 
     public Iterable<GalleryData> getGallery() {
-        Iterable<GalleryData> gallery = galleryDao.findAllOrderByDate();
-        return gallery;
+        if (galleryModerate) {
+            return galleryDao.findModeratedOrderByDate();
+        } else {
+            return galleryDao.findAllOrderByDate();
+        }
     }
 
     public GalleryData saveGallery(GalleryData galleryData) {
