@@ -87,5 +87,6 @@ create table foodfest.gallery (
   THUMB varchar(1000) null,
 	USER varchar(255) CHARSET utf8,
 	CAPTION varchar(4000) CHARSET utf8,
+	MODERATED BIT(1) DEFAULT 0,
 	CREATED_DATE TIMESTAMP NOT NULL
 );
