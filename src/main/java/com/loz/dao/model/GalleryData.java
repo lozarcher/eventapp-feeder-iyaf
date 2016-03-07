@@ -26,6 +26,8 @@ public class GalleryData implements Serializable{
     private String caption;
     @Column(name = "CREATED_DATE")
     private Date createdDate;
+    @Column(name = "MODERATED")
+    private boolean moderated;
 
     public GalleryData() {
     }
@@ -76,5 +78,13 @@ public class GalleryData implements Serializable{
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public boolean isModerated() {
+        return moderated;
+    }
+
+    public void setModerated(boolean moderated) {
+        this.moderated = moderated;
     }
 }
