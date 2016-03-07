@@ -195,8 +195,10 @@ public class FeedController {
                 String s3PreviewFilename = s3Folder+"/"+previewFilename;
 
                 BufferedImage img = ImageIO.read(s3File); // load image
-                //resize to 150 pixels max
-                BufferedImage thumbnail = Scalr.resize(img, 400);
+                //resize to 300 pixels max
+                BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC,
+                        300,
+                        300, Scalr.OP_ANTIALIAS);
                 File thumbFile = new File( System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
                         previewFilename);
                 ImageIO.write(thumbnail, "jpg", thumbFile);
