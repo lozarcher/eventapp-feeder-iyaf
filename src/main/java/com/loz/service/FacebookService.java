@@ -74,6 +74,10 @@ public class FacebookService {
         return gallery;
     }
 
+    public GalleryData saveGallery(GalleryData galleryData) {
+        return galleryDao.save(galleryData);
+    }
+
     private String getLocationForVenue(VenueData venueData) {
         List<EventData> events = eventDao.findByVenueId(venueData);
         if (events.size() > 0) {

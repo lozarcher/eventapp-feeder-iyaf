@@ -82,7 +82,7 @@ create table foodfest.post (
 );
 drop table if exists foodfest.gallery;
 create table foodfest.gallery (
-	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
+	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   PICTURE varchar(1000) null,
   THUMB varchar(1000) null,
 	USER varchar(255) CHARSET utf8,
