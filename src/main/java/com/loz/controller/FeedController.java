@@ -12,8 +12,8 @@ import com.loz.dao.model.PostData;
 import com.loz.dao.model.TweetData;
 import com.loz.dao.responseVo.*;
 import com.loz.service.*;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.http.HttpResponse;
-import org.imgscalr.Scalr;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -194,14 +192,11 @@ public class FeedController {
                 String previewFilename = filename.replaceFirst("\\.", "_thumb.");
                 String s3PreviewFilename = s3Folder+"/"+previewFilename;
 
-                BufferedImage img = ImageIO.read(s3File); // load image
-                //resize to 300 pixels max
-                BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC,
-                        300,
-                        300, Scalr.OP_ANTIALIAS);
                 File thumbFile = new File( System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
                         previewFilename);
-                ImageIO.write(thumbnail, "jpg", thumbFile);
+                Thumbnails.of(s3File)
+                        .size(300, 300)
+                        .toFile(thumbFile);
                 String thumbUrl = s3Url+s3Bucket+"/"+s3PreviewFilename;
 
                 PutObjectResult thumbResult = s3client.putObject(new PutObjectRequest(s3Bucket, s3PreviewFilename,
