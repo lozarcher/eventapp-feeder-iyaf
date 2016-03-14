@@ -83,7 +83,7 @@ public class FacebookFeedService {
         List<Page> performerPages = new ArrayList<Page>();
         for (PerformerFeedData performerFeed : performerList) {
             Page performerPage = getPage(performerFeed.getId());
-            performerPage.setKingstonPound(false);
+            performerPage.setKingstonPound(performerFeed.iskPound());
             performerPages.add(performerPage);
         }
         return performerPages;

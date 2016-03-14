@@ -16,6 +16,9 @@ public class PerformerFeedData implements Serializable{
     @Column(name = "ID", unique = true)
     private Long id;
 
+    @Column(name = "KPOUND")
+    private boolean kPound;
+
     public PerformerFeedData() {
     }
 
@@ -25,5 +28,13 @@ public class PerformerFeedData implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean iskPound() {
+        return kPound;
+    }
+
+    public void setkPound(boolean kPound) {
+        this.kPound = kPound;
     }
 }
