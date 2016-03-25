@@ -139,6 +139,15 @@ public class FeedController {
         return response;
     }
 
+    @RequestMapping("/info")
+    @ResponseBody
+    public InfoResponse info() {
+        InfoResponse response = new InfoResponse();
+        response.setDate(new Date());
+        response.setData(facebookService.getInfo());
+        return response;
+    }
+
     @RequestMapping("/venues")
     @ResponseBody
     public VenueResponse venues() {

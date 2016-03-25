@@ -40,14 +40,17 @@ public class FacebookService {
     @Autowired
     GalleryDao galleryDao;
 
+    @Autowired
+    InfoDao infoDao;
+
     @Value("${gallery.moderate}")
     private boolean galleryModerate;
 
     public Iterable<EventData> getEvents() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.MONTH, 4);
-        cal.set(Calendar.YEAR, 2015);
+        cal.set(Calendar.MONTH, 1);
+        cal.set(Calendar.YEAR, 2016);
         LOGGER.info("Getting events since {}", cal.getTime());
         return eventDao.findAllOrderByDate(cal.getTime());
     }
@@ -79,6 +82,10 @@ public class FacebookService {
         } else {
             return galleryDao.findAllOrderByDate();
         }
+    }
+
+    public Iterable<InfoData> getInfo() {
+        return infoDao.findAllOrderByTitle();
     }
 
     public GalleryData saveGallery(GalleryData galleryData) {

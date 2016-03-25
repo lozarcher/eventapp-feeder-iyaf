@@ -90,3 +90,11 @@ create table foodfest.gallery (
 	MODERATED BIT(1) DEFAULT 0,
 	CREATED_DATE TIMESTAMP NOT NULL
 );
+drop table if exists foodfest.info;
+create table foodfest.info (
+	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  PICTURE varchar(1000) null,
+  THUMB varchar(1000) null,
+	TITLE varchar(4000) CHARSET utf8,
+  CONTENT text CHARSET utf8
+);
