@@ -130,7 +130,11 @@ public class PerformerData implements Serializable{
         new PerformerData();
         this.setId(page.getId());
         this.setName(page.getName());
-        this.setAbout(page.getAbout());
+        String description = page.getDescription();
+        if (description == null) {
+            description = page.getAbout();
+        }
+        this.setAbout(description);
         this.setLink(page.getLink());
         if (page.getCover() != null) {
             this.setCoverImg(page.getCover().getSource());

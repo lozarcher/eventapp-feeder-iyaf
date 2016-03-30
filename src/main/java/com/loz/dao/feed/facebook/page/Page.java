@@ -10,6 +10,7 @@ public class Page {
     private Long id;
     private String name;
     private String about;
+    private String description;
     private Cover cover;
     private Picture picture;
     private String link;
@@ -39,6 +40,14 @@ public class Page {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Cover getCover() {
