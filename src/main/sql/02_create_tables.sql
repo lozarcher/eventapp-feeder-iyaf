@@ -75,7 +75,7 @@ create table foodfest.post (
 	ID NUMERIC(20,0) NOT NULL PRIMARY KEY,
   MESSAGE TEXT CHARSET utf8,
   PICTURE varchar(1000) null,
-  LINK varchar(255) null,
+  LINK varchar(1000) null,
 	NAME varchar(255) CHARSET utf8,
 	CAPTION varchar(4000) null,
 	CREATED_DATE TIMESTAMP NOT NULL
