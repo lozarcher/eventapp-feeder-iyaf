@@ -42,6 +42,9 @@ public class EventData {
     @Column(name = "LOCATION")
     private String location;
 
+    @Column(name = "TICKET_URI")
+    private String ticketUrl;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private VenueData venue;
 
@@ -136,6 +139,14 @@ public class EventData {
         this.coverOffsetX = coverOffsetX;
     }
 
+    public String getTicketUrl() {
+        return ticketUrl;
+    }
+
+    public void setTicketUrl(String ticketUrl) {
+        this.ticketUrl = ticketUrl;
+    }
+
     public void setDataFromEvent(Event event) {
         this.setId(event.getId());
         this.setName(event.getName());
@@ -155,6 +166,9 @@ public class EventData {
         }
         this.setStartTime(event.getStart_time());
         this.setEndTime(event.getEnd_time());
+        if (event.getTicket_uri() != null) {
+            this.setTicketUrl(event.getTicket_uri());
+        }
         if (event.getPlace() == null || event.getPlace().getId() == null) {
             this.setVenue(null);
         } else {

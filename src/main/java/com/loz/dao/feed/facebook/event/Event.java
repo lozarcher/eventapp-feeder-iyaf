@@ -17,6 +17,7 @@ public class Event {
     private Date end_time;
     private String location;
     private Place place;
+    private String ticket_uri;
 
     public Long getId() {
         return id;
@@ -88,6 +89,14 @@ public class Event {
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    public String getTicket_uri() {
+        return ticket_uri;
+    }
+
+    public void setTicket_uri(String ticket_uri) {
+        this.ticket_uri = ticket_uri;
     }
 }
 

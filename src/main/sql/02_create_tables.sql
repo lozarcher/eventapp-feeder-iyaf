@@ -10,7 +10,8 @@ create table foodfest.event (
       LOCATION varchar(255) null,
       START_TIME TIMESTAMP null,
       END_TIME TIMESTAMP null,
-      VENUE_ID NUMERIC(20,0) null
+      VENUE_ID NUMERIC(20,0) null,
+      TICKET_URI varchar(255) null
 );
 drop table if exists foodfest.tweet;
 create table foodfest.tweet (
