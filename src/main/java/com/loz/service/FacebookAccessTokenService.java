@@ -1,5 +1,6 @@
 package com.loz.service;
 
+import com.loz.dao.feed.facebook.common.AccessToken;
 import com.loz.exception.FacebookAccessTokenNotFoundException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,22 +34,16 @@ public class FacebookAccessTokenService {
         return token;
     }
 
+
     private String getNewToken() throws FacebookAccessTokenNotFoundException {
         RestTemplate restTemplate = new RestTemplate();
         String getTokenUrl = String.format(URL_GET_TOKEN, appId, appSecret);
+        ResponseEntity<AccessToken> response = null;
 
         LOGGER.debug("URL = "+getTokenUrl);
-        ResponseEntity response = restTemplate.getForEntity(getTokenUrl, String.class);
-        if (response.getStatusCode().equals(HttpStatus.OK)) {
-            String[] tokenParts = response.getBody().toString().split("=");
-            if (tokenParts[1] != null) {
-                return tokenParts[1];
-            } else {
-                throw new FacebookAccessTokenNotFoundException("Malformed response: "+response.getBody().toString());
-            }
-        } else {
-            throw new FacebookAccessTokenNotFoundException("Status code "+response.getStatusCode());
-        }
+        response = restTemplate.getForEntity(getTokenUrl, AccessToken.class);
+
+        return response.getBody().getAccess_token();
     }
 }
 
