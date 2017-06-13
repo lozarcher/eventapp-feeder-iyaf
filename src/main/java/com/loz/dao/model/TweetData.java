@@ -86,7 +86,7 @@ public class TweetData {
     }
 
     public String getProfilePic() {
-        return profilePic;
+        return profilePic.replaceFirst("http://", "https://");
     }
 
     public void setProfilePic(String profilePic) {

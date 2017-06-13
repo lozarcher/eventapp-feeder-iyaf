@@ -41,7 +41,7 @@ public class GalleryData implements Serializable{
     }
 
     public String getPicture() {
-        return picture;
+        return picture.replaceFirst("http://", "https://");
     }
 
     public void setPicture(String picture) {
@@ -49,7 +49,7 @@ public class GalleryData implements Serializable{
     }
 
     public String getThumb() {
-        return thumb;
+        return thumb.replaceFirst("http://", "https://");
     }
 
     public void setThumb(String thumb) {
