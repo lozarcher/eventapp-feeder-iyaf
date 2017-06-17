@@ -11,6 +11,7 @@ import com.loz.exception.FacebookAccessException;
 import com.loz.dao.feed.twitter.Status;
 import com.loz.dao.feed.twitter.TwitterResponse;
 import com.loz.exception.TwitterAccessException;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,35 @@ public class RefreshService {
             throw new RuntimeException("Cannot retrieve events");
         }
         List<Event> eventList = eventsResponse.getData();
+
+        List<Event> extraEvents = new ArrayList<Event>();
+        // duplicate events for each day if they spread over multiple days
+        for (Event event : eventList) {
+            Date currentStartTime = event.getStart_time();
+            Long currentId = event.getId();
+            while (dateDiffMoreThanADay(currentStartTime, event.getEnd_time())) {
+                Event newEvent = new Event();
+                currentId++;
+                newEvent.setId(currentId);
+                newEvent.setCover(event.getCover());
+                newEvent.setDescription(event.getDescription());
+                newEvent.setEnd_time(event.getEnd_time());
+                newEvent.setLocation(event.getLocation());
+                newEvent.setName(event.getName());
+                newEvent.setPicture(event.getPicture());
+                newEvent.setTicket_uri(event.getTicket_uri());
+                newEvent.setPlace(event.getPlace());
+
+                DateTime startTimePrevious = new DateTime(currentStartTime);
+                DateTime dtPlusOne = startTimePrevious.plusDays(1);
+                newEvent.setStart_time(dtPlusOne.toDate());
+                currentStartTime = dtPlusOne.toDate();
+                extraEvents.add(newEvent);
+                LOGGER.debug("Added extra event for "+newEvent.getName()+" on "+newEvent.getStart_time().toString());
+            }
+        }
+        eventList.addAll(extraEvents);
+
         for (Event event : eventList) {
             EventData eventData = eventDao.findOne(event.getId());
             if (eventData == null) {
@@ -74,6 +104,14 @@ public class RefreshService {
         }
         updateLastRefresh("EVENT");
         updateLastRefresh("VENUE");
+    }
+
+    public static boolean dateDiffMoreThanADay(Date startTime, Date endTime) {
+        if (endTime == null) {
+            return false;
+        }
+        long diffInMillies = endTime.getTime() - startTime.getTime();
+        return (diffInMillies > 1000*60*60*24);
     }
 
     @Transactional
