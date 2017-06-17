@@ -97,7 +97,7 @@ public class FacebookFeedService {
         boolean lastPage = false;
 
         String getPostsUrl = String.format(URL_GET_POSTS, pageId, URL_GET_POSTS_FILTERS, accessToken);
-        getPostsUrl += "&since="+URL_GET_EVENTS_SINCE;
+        getPostsUrl += "&since="+URL_GET_POSTS_SINCE;
         LOGGER.debug("Requesting from URL "+getPostsUrl);
 
         while (lastPage == false) {
