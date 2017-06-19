@@ -21,7 +21,7 @@ public class TwitterFeedService {
     @Value("${twitter.url.search_tweets}")
     private String URL_SEARCH_TWEETS;
 
-    @Value("${twitter.hashtag}")
+    @Value("${twitter.searchterm}")
     private String query;
 
     public TwitterResponse getTweets() throws TwitterAccessException {
