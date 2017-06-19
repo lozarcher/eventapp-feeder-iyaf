@@ -93,6 +93,8 @@ public class RefreshService {
         }
         eventList.addAll(extraEvents);
 
+        eventDao.deleteAll();
+
         for (Event event : eventList) {
             EventData eventData = eventDao.findOne(event.getId());
             if (eventData == null) {
