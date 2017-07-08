@@ -180,7 +180,7 @@ public class RefreshService {
     }
 
     public static String removeUTFCharacters(String data){
-        return data.replaceAll("[^ -~]", "");
+        return data.replaceAll("[^ -~\\\r\\\n]", "");
     }
 
     private void updateLastRefresh(String tableName) {
