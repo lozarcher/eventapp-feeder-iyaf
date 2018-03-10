@@ -1,7 +1,10 @@
 package com.loz.controller;
 
+import com.amazonaws.SDKGlobalConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -163,7 +166,7 @@ public class FeedController {
 //
 //    }
 //
-    @RequestMapping(method = RequestMethod.POST, value = "/gallery")
+    @RequestMapping(method = RequestMethod.POST, value = "/gallery", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public GalleryResponse handleFileUpload(@RequestParam("filename") String filename,
                                             @RequestParam("name") String name,
@@ -185,8 +188,12 @@ public class FeedController {
                 LOGGER.debug("Filename :"+filename);
                 LOGGER.debug("File :"+multipartFile.getContentType()+" "+multipartFile.getSize());
 
+                System.setProperty(SDKGlobalConfiguration.ENFORCE_S3_SIGV4_SYSTEM_PROPERTY, "true");
+
                 AWSCredentials credentials = new BasicAWSCredentials(s3AccessKey, s3SecretKey);
                 AmazonS3 s3client = new AmazonS3Client(credentials);
+                s3client.setRegion(Region.getRegion(Regions.EU_WEST_2));
+
                 String s3Filename = s3Folder+"/"+filename;
 
                 File s3File = multipartToFile(multipartFile);
