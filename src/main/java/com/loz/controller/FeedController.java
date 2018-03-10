@@ -2,11 +2,13 @@ package com.loz.controller;
 
 import com.amazonaws.SDKGlobalConfiguration;
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -166,19 +169,23 @@ public class FeedController {
 //
 //    }
 //
-    @RequestMapping(method = RequestMethod.POST, value = "/gallery", consumes = "application/json", produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, value = "/gallery", produces = "application/json")
     @ResponseBody
     public GalleryResponse handleFileUpload(@RequestParam("filename") String filename,
                                             @RequestParam("name") String name,
                                             @RequestParam("caption") String caption,
                                          @RequestParam("photo") MultipartFile multipartFile) {
-        HttpResponse response;
+
+        LOGGER.info("Posting gallery image");
+
         if (filename.contains("/")) {
             throw new RuntimeException("invalid name");
         }
 
         if (!multipartFile.isEmpty()) {
             try {
+                LOGGER.info("Gallery image not empty");
+
 //                BufferedOutputStream stream = new BufferedOutputStream(
 //                        new FileOutputStream(new File(Application.ROOT + "/" + name)));
 //                FileCopyUtils.copy(file.getInputStream(), stream);
@@ -190,16 +197,31 @@ public class FeedController {
 
                 System.setProperty(SDKGlobalConfiguration.ENFORCE_S3_SIGV4_SYSTEM_PROPERTY, "true");
 
-                AWSCredentials credentials = new BasicAWSCredentials(s3AccessKey, s3SecretKey);
-                AmazonS3 s3client = new AmazonS3Client(credentials);
-                s3client.setRegion(Region.getRegion(Regions.EU_WEST_2));
+                AWSCredentials credentials = new BasicAWSCredentials(
+                        s3AccessKey,
+                        s3SecretKey
+                );
+
+                LOGGER.debug("credentials "+credentials.toString());
+
+                AmazonS3 s3client = AmazonS3ClientBuilder
+                        .standard()
+                        .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                        .withRegion(Regions.EU_WEST_2)
+                        .build();
 
                 String s3Filename = s3Folder+"/"+filename;
 
                 File s3File = multipartToFile(multipartFile);
-                PutObjectResult result = s3client.putObject(new PutObjectRequest(s3Bucket, s3Filename,
-                        s3File)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
+//                PutObjectResult result = s3client.putObject(new PutObjectRequest(s3Bucket, s3Filename,
+//                        s3File)
+//                        .withCannedAcl(CannedAccessControlList.PublicRead));
+
+                PutObjectResult result = s3client.putObject(
+                        s3Bucket,
+                        s3Filename,
+                        s3File
+                );
 
                 LOGGER.debug("Result: "+result.toString());
                 String url = s3Url+s3Bucket+"/"+s3Filename;
@@ -228,6 +250,8 @@ public class FeedController {
                 galleryData.setCreatedDate(new Date());
                 galleryData.setPicture(url);
                 galleryData.setThumb(thumbUrl);
+                LOGGER.debug("Saving gallery data: "+galleryData.toString());
+
                 facebookService.saveGallery(galleryData);
                 return gallery();
             }
@@ -248,9 +272,10 @@ public class FeedController {
         return convFile;
     }
 
-    @RequestMapping("/gallery")
+    @RequestMapping(value = "/gallery", produces= MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public GalleryResponse gallery() {
+        LOGGER.info("Getting gallery data");
         GalleryResponse response = new GalleryResponse();
         response.setDate(new Date());
         response.setData(facebookService.getGallery());
