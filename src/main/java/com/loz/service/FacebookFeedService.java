@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -70,12 +71,16 @@ public class FacebookFeedService {
         } catch (UnsupportedEncodingException e) {
             LOGGER.error("URL syntax invalid " + getPageUrl);
             throw new FacebookAccessException(e.getMessage());
+        } catch (HttpClientErrorException e) {
+            LOGGER.error("Can't fetch feed for this trader " + getPageUrl);
+            throw new FacebookAccessException(e.getMessage());
         }
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
+        if (response == null || !response.getStatusCode().equals(HttpStatus.OK)) {
             LOGGER.error("Facebook access error");
             throw new FacebookAccessException("Status code " + response.getStatusCode());
         }
         return response.getBody();
+
     }
 
     public List<Page> getPages() throws FacebookAccessException {
