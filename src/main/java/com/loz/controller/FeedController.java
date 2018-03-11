@@ -217,11 +217,11 @@ public class FeedController {
 //                        s3File)
 //                        .withCannedAcl(CannedAccessControlList.PublicRead));
 
-                PutObjectResult result = s3client.putObject(
+                PutObjectResult result = s3client.putObject(new PutObjectRequest(
                         s3Bucket,
                         s3Filename,
                         s3File
-                );
+                ).withCannedAcl(CannedAccessControlList.PublicRead));;
 
                 LOGGER.debug("Result: "+result.toString());
                 String url = s3Url+s3Bucket+"/"+s3Filename;
