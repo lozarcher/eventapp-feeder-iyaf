@@ -272,11 +272,7 @@ public class FeedController {
         return convFile;
     }
 
-<<<<<<< HEAD:src/main/java/com/loz/feeder/controller/FeedController.java
-    @RequestMapping(value="/gallery", produces = "application/json")
-=======
     @RequestMapping(value = "/gallery", produces= MediaType.APPLICATION_JSON_VALUE)
->>>>>>> ed6b533a405ddcae2b441b4292fc20dff20e2f15:src/main/java/com/loz/controller/FeedController.java
     @ResponseBody
     public GalleryResponse gallery() {
         LOGGER.info("Getting gallery data");
