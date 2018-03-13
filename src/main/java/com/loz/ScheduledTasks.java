@@ -1,7 +1,7 @@
 package com.loz;
 
-import com.loz.dao.LastRefreshDao;
-import com.loz.service.RefreshService;
+import com.loz.feeder.dao.LastRefreshDao;
+import com.loz.feeder.service.RefreshService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
