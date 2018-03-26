@@ -50,7 +50,7 @@ public class FacebookService {
         //cal.set(Calendar.YEAR, 2016);
         //cal.set(Calendar.HOUR_OF_DAY, 0);
         //cal.set(Calendar.MINUTE, 0);
-        cal.add(Calendar.MONTH, -12);
+        cal.add(Calendar.HOUR, -6);
         LOGGER.info("Getting events since {}", cal.getTime());
         return eventDao.findAllOrderByDate(cal.getTime());
     }
