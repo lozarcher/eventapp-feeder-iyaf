@@ -5,6 +5,6 @@ It sources its data by polling Facebook events, Facebook pages and a Twitter sea
 
 # Related Repositories
 
-[iPhone App](https://github.com/lozarcher/eventapp-ios) 
+[iPhone App: eventapp-ios](https://github.com/lozarcher/eventapp-ios) 
 
-[Android App](https://github.com/lozarcher/eventapp-android) 
+[Android App: eventapp-android](https://github.com/lozarcher/eventapp-android) 
