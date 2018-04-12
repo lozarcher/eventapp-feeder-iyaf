@@ -160,10 +160,7 @@ public class EventData {
             this.setCoverOffsetX(cover.getOffset_x());
             this.setCoverOffsetY(cover.getOffset_y());
         }
-        Picture picture = event.getPicture();
-        if (picture != null) {
-            this.setProfileUrl(picture.getData().getUrl());
-        }
+        this.setProfileUrl(null); // deprecated
         this.setStartTime(event.getStart_time());
         this.setEndTime(event.getEnd_time());
         if (event.getTicket_uri() != null) {

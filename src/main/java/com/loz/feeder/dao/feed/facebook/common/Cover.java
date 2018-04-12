@@ -1,8 +1,12 @@
 package com.loz.feeder.dao.feed.facebook.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by loz on 05/02/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cover {
     private String source;
     private Integer offset_x;

@@ -55,16 +55,7 @@ public class RefreshService {
     LastRefreshDao lastRefreshDao;
 
     @Transactional
-    public void updateEventsAndVenues() {
-        EventResponse eventsResponse;
-        try {
-            eventsResponse = facebookFeedService.getEvents();
-        } catch (FacebookAccessException e) {
-            LOGGER.error("Cannot retrieve events",e);
-            throw new RuntimeException("Cannot retrieve events");
-        }
-        List<Event> eventList = eventsResponse.getData();
-
+    public void storeEventsAndVenues(List<Event> eventList) {
         List<Event> extraEvents = new ArrayList<Event>();
         // duplicate events for each day if they spread over multiple days
         for (Event event : eventList) {
@@ -79,7 +70,6 @@ public class RefreshService {
                 newEvent.setEnd_time(event.getEnd_time());
                 newEvent.setLocation(event.getLocation());
                 newEvent.setName(event.getName());
-                newEvent.setPicture(event.getPicture());
                 newEvent.setTicket_uri(event.getTicket_uri());
                 newEvent.setPlace(event.getPlace());
 
@@ -104,6 +94,20 @@ public class RefreshService {
             LOGGER.debug("Saving event {}", event.getName());
             eventDao.save(eventData);
         }
+    }
+
+    public void updateEventsAndVenues() {
+        EventResponse eventsResponse;
+        try {
+            eventsResponse = facebookFeedService.getEvents();
+        } catch (FacebookAccessException e) {
+            LOGGER.error("Cannot retrieve events",e);
+            throw new RuntimeException("Cannot retrieve events");
+        }
+        List<Event> eventList = eventsResponse.getData();
+
+        storeEventsAndVenues(eventList);
+
         updateLastRefresh("EVENT");
         updateLastRefresh("VENUE");
     }

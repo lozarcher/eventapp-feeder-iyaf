@@ -12,7 +12,6 @@ public class Event {
     private String name;
     private String description;
     private Cover cover;
-    private Picture picture;
     private Date start_time;
     private Date end_time;
     private String location;
@@ -81,14 +80,6 @@ public class Event {
 
     public void setPlace(Place place) {
         this.place = place;
-    }
-
-    public Picture getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
     }
 
     public String getTicket_uri() {

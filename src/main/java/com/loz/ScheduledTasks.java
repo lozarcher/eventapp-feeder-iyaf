@@ -21,7 +21,7 @@ public class ScheduledTasks {
     @Autowired
     RefreshService refreshService;
 
-    @Scheduled(cron = "${cron.refresh.events}")
+    //@Scheduled(cron = "${cron.refresh.events}")
     public void refreshEvents() {
         LOGGER.debug("Refreshing Events");
         refreshService.updateEventsAndVenues();
@@ -39,7 +39,7 @@ public class ScheduledTasks {
         refreshService.updatePosts();
     }
 
-    @Scheduled(cron = "${cron.refresh.tweets}")
+    //@Scheduled(cron = "${cron.refresh.tweets}")
     public void refreshTweets() {
         LOGGER.debug("Refreshing Tweets");
         refreshService.updateTweets();
