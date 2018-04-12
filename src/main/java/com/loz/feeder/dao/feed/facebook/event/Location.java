@@ -1,8 +1,11 @@
 package com.loz.feeder.dao.feed.facebook.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by larcher on 27/05/2015.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
     private String city;
     private String country;
