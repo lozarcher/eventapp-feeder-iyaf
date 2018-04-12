@@ -35,7 +35,7 @@ public class AdminController {
         return "Refresh done";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/updateevents", produces = "text/plain")
+    @RequestMapping(method = RequestMethod.POST, value = "/secure/updateevents", produces = "text/plain")
     @ResponseBody
     public String updateEvents(@RequestParam("events") String eventsJson) {
         try {
