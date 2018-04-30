@@ -17,6 +17,7 @@ public class Event {
     private String location;
     private Place place;
     private String ticket_uri;
+    private Long eventId;
 
     public Long getId() {
         return id;
@@ -88,6 +89,14 @@ public class Event {
 
     public void setTicket_uri(String ticket_uri) {
         this.ticket_uri = ticket_uri;
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 }
 

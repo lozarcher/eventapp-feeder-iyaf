@@ -61,6 +61,7 @@ public class RefreshService {
         for (Event event : eventList) {
             Date currentStartTime = event.getStart_time();
             Long currentId = event.getId();
+            event.setEventId(event.getId());
             while (dateDiffMoreThanADay(currentStartTime, event.getEnd_time())) {
                 Event newEvent = new Event();
                 currentId++;
@@ -72,6 +73,7 @@ public class RefreshService {
                 newEvent.setName(event.getName());
                 newEvent.setTicket_uri(event.getTicket_uri());
                 newEvent.setPlace(event.getPlace());
+                newEvent.setEventId(event.getEventId());
 
                 DateTime startTimePrevious = new DateTime(currentStartTime);
                 DateTime dtPlusOne = startTimePrevious.plusDays(1);
