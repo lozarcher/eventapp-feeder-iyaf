@@ -3,6 +3,7 @@ package com.loz.feeder.service;
 import com.loz.feeder.dao.*;
 import com.loz.feeder.dao.feed.facebook.event.Event;
 import com.loz.feeder.dao.feed.facebook.event.EventResponse;
+import com.loz.feeder.dao.feed.facebook.event.EventTime;
 import com.loz.feeder.dao.feed.facebook.news.Post;
 import com.loz.feeder.dao.feed.facebook.news.PostResponse;
 import com.loz.feeder.dao.feed.facebook.page.Page;
@@ -62,25 +63,26 @@ public class RefreshService {
             Date currentStartTime = event.getStart_time();
             Long currentId = event.getId();
             event.setEventId(event.getId());
-            while (dateDiffMoreThanADay(currentStartTime, event.getEnd_time())) {
-                Event newEvent = new Event();
-                currentId++;
-                newEvent.setId(currentId);
-                newEvent.setCover(event.getCover());
-                newEvent.setDescription(event.getDescription());
-                newEvent.setEnd_time(event.getEnd_time());
-                newEvent.setLocation(event.getLocation());
-                newEvent.setName(event.getName());
-                newEvent.setTicket_uri(event.getTicket_uri());
-                newEvent.setPlace(event.getPlace());
-                newEvent.setEventId(event.getEventId());
+// handle where events have multiple start times
+            if (event.getEventTimes()!=null && event.getEventTimes().size()>0) {
+                for (EventTime eventTime : event.getEventTimes()) {
+                    Event newEvent = event.createDuplicateEvent(currentId++, eventTime.getStart_time(), eventTime.getEnd_time());
+                    extraEvents.add(newEvent);
 
-                DateTime startTimePrevious = new DateTime(currentStartTime);
-                DateTime dtPlusOne = startTimePrevious.plusDays(1);
-                newEvent.setStart_time(dtPlusOne.toDate());
-                currentStartTime = dtPlusOne.toDate();
-                extraEvents.add(newEvent);
-                LOGGER.debug("Added extra event for "+newEvent.getName()+" on "+newEvent.getStart_time().toString());
+                    LOGGER.debug("Added event with multiple event times, " + newEvent.getName() + " on " + newEvent.getStart_time().toString());
+                }
+            } else {
+                // handle events which span more than one day (list each day separately)
+                while (dateDiffMoreThanADay(currentStartTime, event.getEnd_time())) {
+                    DateTime startTimePrevious = new DateTime(currentStartTime);
+                    DateTime dtPlusOne = startTimePrevious.plusDays(1);
+                    currentStartTime = dtPlusOne.toDate();
+
+                    Event newEvent = event.createDuplicateEvent(currentId++, currentStartTime, event.getEnd_time());
+                    extraEvents.add(newEvent);
+
+                    LOGGER.debug("Added extra event for " + newEvent.getName() + " on " + newEvent.getStart_time().toString());
+                }
             }
         }
         eventList.addAll(extraEvents);

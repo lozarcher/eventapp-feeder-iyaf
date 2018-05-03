@@ -1,10 +1,12 @@
 package com.loz.feeder.dao.feed.facebook.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.loz.feeder.dao.feed.facebook.common.Cover;
 import com.loz.feeder.dao.feed.facebook.common.Picture;
 
 import java.util.Date;
+import java.util.List;
 
 public class Event {
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -18,6 +20,7 @@ public class Event {
     private Place place;
     private String ticket_uri;
     private Long eventId;
+    private List<EventTime> eventTimes;
 
     public Long getId() {
         return id;
@@ -83,6 +86,15 @@ public class Event {
         this.place = place;
     }
 
+    @JsonProperty("event_times")
+    public List<EventTime> getEventTimes() {
+        return eventTimes;
+    }
+
+    public void setEventTimes(List<EventTime> eventTimes) {
+        this.eventTimes = eventTimes;
+    }
+
     public String getTicket_uri() {
         return ticket_uri;
     }
@@ -97,6 +109,22 @@ public class Event {
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
+    }
+
+    public Event createDuplicateEvent(Long id, Date startTime, Date endTime) {
+        Event newEvent = new Event();
+        newEvent.setId(id);
+        newEvent.setName(this.getName());
+        newEvent.setDescription(this.getDescription());
+        newEvent.setCover(this.getCover());
+        newEvent.setLocation(this.getLocation());
+        newEvent.setPlace(this.getPlace());
+        newEvent.setTicket_uri(this.getTicket_uri());
+        newEvent.setEventTimes(this.getEventTimes());
+        newEvent.setStart_time(startTime);
+        newEvent.setEnd_time(endTime);
+        newEvent.setEventId(this.getEventId());
+        return newEvent;
     }
 }
 

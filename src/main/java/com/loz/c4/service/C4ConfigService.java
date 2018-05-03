@@ -1,6 +1,8 @@
 package com.loz.c4.service;
 
+import com.loz.c4.controller.Installed;
 import com.loz.c4.controller.Platform;
+import com.loz.c4.controller.PlatformConfig;
 import com.loz.c4.dao.config.ConfigResponse;
 import com.loz.c4.dao.properties.PropertiesResponse;
 import com.loz.feeder.dao.release.ReleaseResponse;
@@ -16,8 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.*;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class C4ConfigService {
@@ -82,27 +83,50 @@ public class C4ConfigService {
                 "<td>Conviva</td>"+
                 "</tr>";
 
-        for (Platform platform : Platform.values()) {
+        List<PlatformConfig> platformConfigs = new ArrayList<>();
 
+        for (Platform platform : Platform.values()) {
             ConfigResponse configResponse = getConfigResponse(platform.getConfigUrl());
             String configUrl = configResponse.getConfig().getUrl() +
                     configResponse.getConfig().getVersion() +
                     ".json";
+            String key = configResponse.getApi().getRequestHeaders().getxC4APIKey();
+
+            PlatformConfig platformConfig = new PlatformConfig();
+            platformConfig.setPlatformName(platform.getTitle());
+            platformConfig.setKey(key);
+            platformConfig.setConfigUrl(configUrl);
+            platformConfig.setVersionUrl(platform.getVersionUrl());
+            platformConfigs.add(platformConfig);
+        }
+
+        for (Installed platform : Installed.values()) {
+            PlatformConfig platformConfig = new PlatformConfig();
+            platformConfig.setPlatformName(platform.getTitle());
+            platformConfig.setConfigUrl(platform.getConfigUrl());
+            platformConfig.setKey(platform.getKey());
+            platformConfig.setVersionUrl(platform.getVersionUrl());
+            platformConfigs.add(platformConfig);
+        }
+
+
+        for (PlatformConfig platformConfig : platformConfigs) {
+
             ResponseEntity<PropertiesResponse> response = null;
 
             HttpHeaders headers = new HttpHeaders();
             //headers.set("X-C4-API-Key", configResponse.getApi().getRequestParameters().getApikey());
-            headers.set("X-C4-API-Key", configResponse.getApi().getRequestHeaders().getxC4APIKey());
+            headers.set("X-C4-API-Key", platformConfig.getKey());
 
             HttpEntity entity = new HttpEntity(headers);
 
-            if (isUrlValid(configUrl)) {
-                response = restTemplate().exchange(URLDecoder.decode(configUrl), HttpMethod.GET, entity, PropertiesResponse.class);
+            if (isUrlValid(platformConfig.getConfigUrl())) {
+                response = restTemplate().exchange(URLDecoder.decode(platformConfig.getConfigUrl()), HttpMethod.GET, entity, PropertiesResponse.class);
                 //response = restTemplate.getForEntity(URLDecoder.decode(configUrl, "UTF-8"), String.class);
 
                 output += "<tr>"+
-                        "<td>"+platform.getTitle()+"</td>"+
-                        "<td>"+getVersion(platform.getVersionUrl())+"</td>"+
+                        "<td>"+platformConfig.getPlatformName()+"</td>"+
+                        "<td>"+getVersion(platformConfig.getVersionUrl())+"</td>"+
                         "<td>"+getSubtitles(response.getBody())+"</td>"+
                         "<td>"+getUserAlerts(response.getBody())+"</td>"+
                         "<td>"+getKantar(response.getBody())+"</td>"+
@@ -111,7 +135,7 @@ public class C4ConfigService {
                         "<td>"+getConviva(response.getBody())+"</td>"+
                         "</tr>";
             } else {
-                output += "<tr><td colspan=\"8\">Couldn't load the config file for "+platform.getTitle()+" from "+platform.getConfigUrl()+"</td></tr>";
+                output += "<tr><td colspan=\"8\">Couldn't load the config file for "+platformConfig.getPlatformName()+" from "+platformConfig.getConfigUrl()+"</td></tr>";
             }
 
 
