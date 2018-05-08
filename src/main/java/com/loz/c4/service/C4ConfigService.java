@@ -1,6 +1,7 @@
 package com.loz.c4.service;
 
 import com.loz.c4.controller.Installed;
+import com.loz.c4.controller.InstalledPlatform;
 import com.loz.c4.controller.Platform;
 import com.loz.c4.controller.PlatformConfig;
 import com.loz.c4.dao.config.ConfigResponse;
@@ -8,6 +9,7 @@ import com.loz.c4.dao.properties.PropertiesResponse;
 import com.loz.feeder.dao.release.ReleaseResponse;
 import com.loz.c4.exception.C4ConfigException;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -24,6 +26,9 @@ import java.util.*;
 public class C4ConfigService {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(C4ConfigService.class);
+
+    @Autowired
+    InstalledPlatform installedPlatforms;
 
     public RestOperations restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
@@ -100,7 +105,7 @@ public class C4ConfigService {
             platformConfigs.add(platformConfig);
         }
 
-        for (Installed platform : Installed.values()) {
+        for (Installed platform : installedPlatforms.getPlatforms()) {
             PlatformConfig platformConfig = new PlatformConfig();
             platformConfig.setPlatformName(platform.getTitle());
             platformConfig.setConfigUrl(platform.getConfigUrl());
@@ -117,7 +122,6 @@ public class C4ConfigService {
             HttpHeaders headers = new HttpHeaders();
             //headers.set("X-C4-API-Key", configResponse.getApi().getRequestParameters().getApikey());
             headers.set("X-C4-API-Key", platformConfig.getKey());
-
             HttpEntity entity = new HttpEntity(headers);
 
             if (isUrlValid(platformConfig.getConfigUrl())) {
