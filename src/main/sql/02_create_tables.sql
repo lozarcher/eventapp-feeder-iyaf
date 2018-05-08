@@ -12,7 +12,9 @@ create table foodfest.event (
       END_TIME TIMESTAMP null,
       VENUE_ID NUMERIC(20,0) null,
       TICKET_URI varchar(255) null,
-      EVENT_ID NUMERIC(20,0) not null
+      EVENT_ID NUMERIC(20,0) not null,
+     	PRIMARY KEY (`ID`),
+
 );
 drop table if exists foodfest.tweet;
 create table foodfest.tweet (
@@ -100,3 +102,23 @@ create table foodfest.info (
 	TITLE varchar(4000) CHARSET utf8,
   CONTENT text CHARSET utf8
 );
+drop table if exists foodfest.category;
+create table foodfest.category (
+	ID INT(10) NOT NULL AUTO_INCREMENT,
+  CATEGORY varchar(1000) not null,
+	PRIMARY KEY (`ID`),
+) ENGINE INNODB;
+drop table if exists foodfest.event_category;
+create table foodfest.event_category (
+	EVENTID NUMERIC(20,0) NOT NULL,
+	CATEGORYID INT(10) NOT NULL,
+	PRIMARY KEY (`EVENTID`, `CATEGORYID`),
+	FOREIGN KEY (`EVENTID`)
+        REFERENCES `event`(`ID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+	FOREIGN KEY (`CATEGORYID`)
+        REFERENCES `category`(`ID`)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE INNODB;
