@@ -1,3 +1,13 @@
+DELETE FROM category;
+INSERT INTO category VALUES (1, "Dinner");
+INSERT INTO category VALUES (2, "Booze");
+INSERT INTO category VALUES (3, "Family");
+INSERT INTO category VALUES (4, "Music");
+INSERT INTO category VALUES (5, "Talk");
+INSERT INTO category VALUES (6, "Workshop");
+INSERT INTO category VALUES (7, "Craft");
+INSERT INTO category VALUES (8, "Competition");
+
 DELETE FROM event_category;
 INSERT INTO event_category VALUES (1596017840518904,5);
 INSERT INTO event_category VALUES (440323819723316,1);
@@ -61,3 +71,6 @@ INSERT INTO event_category VALUES (324756278032013,3);
 INSERT INTO event_category VALUES (324756278032013,4);
 INSERT INTO event_category VALUES (1619852128091736,3);
 INSERT INTO event_category VALUES (1619852128091736,6);
+
+
+
