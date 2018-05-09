@@ -4,10 +4,8 @@ import com.amazonaws.SDKGlobalConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -18,7 +16,6 @@ import com.loz.feeder.dao.model.TweetData;
 import com.loz.feeder.dao.responseVo.*;
 import com.loz.feeder.service.*;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.http.HttpResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,19 +71,21 @@ public class FeedController {
     public EventResponse events() {
         EventResponse response = new EventResponse();
         response.setDate(new Date());
-        response.setData(facebookService.getEvents());
-        // response.setData(new ArrayList<EventData>());   // Empty response for testing UI
+        response.setData(facebookService.getEventsWithoutCategories());
         return response;
     }
 
-    @RequestMapping(value="/vouchers", produces = "application/json")
+
+    @RequestMapping(value="/v4/events", produces = "application/json")
     @ResponseBody
-    public VoucherResponse vouchers() {
-        VoucherResponse response = new VoucherResponse();
+    public EventCategoryResponse eventsWithCategories() {
+        EventCategoryResponse response = new EventCategoryResponse();
         response.setDate(new Date());
-        response.setData(voucherService.getVouchers());
+        response.setEvents(facebookService.getEvents());
+        response.setCategories(facebookService.getCategories());
         return response;
     }
+
 
     @RequestMapping(value="/posts/{offset}", produces = "application/json")
     @ResponseBody

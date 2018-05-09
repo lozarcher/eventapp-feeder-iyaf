@@ -1,15 +1,17 @@
 package com.loz.feeder.dao.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loz.feeder.dao.feed.facebook.common.Cover;
 import com.loz.feeder.dao.feed.facebook.event.Event;
 import com.loz.feeder.dao.feed.facebook.common.Picture;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
 @Table(name = "EVENT")
-public class EventData {
+public class EventData implements Serializable {
 
     @Id
     @Column(name = "ID", unique = true)
@@ -47,6 +49,10 @@ public class EventData {
 
     @Column(name = "EVENT_ID")
     private Long eventId;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "events" )
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Collection<CategoryData> categories = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private VenueData venue;
@@ -156,6 +162,14 @@ public class EventData {
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
+    }
+
+    public Collection<CategoryData> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Collection<CategoryData> categories) {
+        this.categories = categories;
     }
 
     public void setDataFromEvent(Event event) {

@@ -26,6 +26,9 @@ public class FacebookService {
     EventDao eventDao;
 
     @Autowired
+    CategoryDao categoryDao;
+
+    @Autowired
     PostDao postDao;
 
     @Autowired
@@ -53,6 +56,19 @@ public class FacebookService {
         cal.add(Calendar.HOUR, -6);
         LOGGER.info("Getting events since {}", cal.getTime());
         return eventDao.findAllOrderByDate(cal.getTime());
+    }
+
+    @Deprecated
+    public Iterable<EventData> getEventsWithoutCategories() {
+        Iterable<EventData> events = getEvents();
+        for (EventData event : events) {
+            event.setCategories(null);
+        }
+        return events;
+    }
+
+    public Iterable<CategoryData> getCategories() {
+        return categoryDao.findAll();
     }
 
     public List<PostData> getPosts(Pageable pageable) {
