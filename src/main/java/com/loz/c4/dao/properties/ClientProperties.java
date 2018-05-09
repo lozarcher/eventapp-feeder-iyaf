@@ -5,6 +5,7 @@ package com.loz.c4.dao.properties;
  */
 public class ClientProperties {
     private Conviva conviva;
+    private SumoLogic sumoLogic;
 
     public Conviva getConviva() {
         return conviva;
@@ -12,5 +13,13 @@ public class ClientProperties {
 
     public void setConviva(Conviva conviva) {
         this.conviva = conviva;
+    }
+
+    public SumoLogic getSumoLogic() {
+        return sumoLogic;
+    }
+
+    public void setSumoLogic(SumoLogic sumoLogic) {
+        this.sumoLogic = sumoLogic;
     }
 }

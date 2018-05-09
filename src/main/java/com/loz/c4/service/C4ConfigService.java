@@ -84,7 +84,9 @@ public class C4ConfigService {
         String output = "<html><head><script src=\"https://use.fontawesome.com/ce8b493cf2.js\"></script></head>"+
                 "<body><table border=1><tr>"+
                 "<td>Platform</td>"+
-                "<td>Version</td><td>Subtitles</td><td>User Alerts</td><td>Kantar</td><td>Credit Squeeze</td><td>Animation</td>"+
+                "<td>Version</td><td>Subtitles</td>"+
+                "<td>Sumo Metrics</td><td>Sumo Logging</td><td>MVT</td><td>Innovid</td><td>Autoplay Limit</td>"
+                +"<td>User Alerts</td><td>Kantar</td><td>Credit Squeeze</td><td>Animation</td>"+
                 "<td>Conviva</td>"+
                 "</tr>";
 
@@ -132,6 +134,11 @@ public class C4ConfigService {
                         "<td>"+platformConfig.getPlatformName()+"</td>"+
                         "<td>"+getVersion(platformConfig.getVersionUrl())+"</td>"+
                         "<td>"+getSubtitles(response.getBody())+"</td>"+
+                        "<td>"+getMetrics(response.getBody())+"</td>"+
+                        "<td>"+getLogging(response.getBody())+"</td>"+
+                        "<td>"+getMvt(response.getBody())+"</td>"+
+                        "<td>"+getInnovid(response.getBody())+"</td>"+
+                        "<td>"+getAutoplayLimit(response.getBody())+"</td>"+
                         "<td>"+getUserAlerts(response.getBody())+"</td>"+
                         "<td>"+getKantar(response.getBody())+"</td>"+
                         "<td>"+getCreditSqueeze(response.getBody())+"</td>"+
@@ -208,6 +215,66 @@ public class C4ConfigService {
         }
     }
 
+    private String getMetrics(PropertiesResponse properties) {
+        Boolean metrics;
+        try {
+            metrics = properties.getConfig().getDisabledFeatures().getMetrics();
+            if (metrics) {
+                return cross();
+            } else {
+                return tick();
+            }
+        }
+        catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getMvt(PropertiesResponse properties) {
+        Boolean mvt;
+        try {
+            mvt = properties.getConfig().getDisabledFeatures().getMvt();
+            if (mvt) {
+                return cross();
+            } else {
+                return tick();
+            }
+        }
+        catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getInnovid(PropertiesResponse properties) {
+        Boolean innovid;
+        try {
+            innovid = properties.getConfig().getDisabledFeatures().getMvt();
+            if (innovid) {
+                return cross();
+            } else {
+                return tick();
+            }
+        }
+        catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getAutoplayLimit(PropertiesResponse properties) {
+        Boolean autoplayLimit;
+        try {
+            autoplayLimit = properties.getConfig().getDisabledFeatures().getMvt();
+            if (autoplayLimit) {
+                return cross();
+            } else {
+                return tick();
+            }
+        }
+        catch (NullPointerException e) {
+            return "";
+        }
+    }
+
     private String getCreditSqueeze(PropertiesResponse properties) {
         Boolean creditSqueeze;
         try {
@@ -243,6 +310,21 @@ public class C4ConfigService {
         try {
             conviva = properties.getConfig().getClientProperties().getConviva().getEnabled();
             if (conviva) {
+                return tick();
+            } else {
+                return cross();
+            }
+        }
+        catch (NullPointerException e) {
+            return "";
+        }
+    }
+
+    private String getLogging(PropertiesResponse properties) {
+        Boolean logging;
+        try {
+            logging = properties.getConfig().getClientProperties().getSumoLogic().getEnabled();
+            if (logging) {
                 return tick();
             } else {
                 return cross();

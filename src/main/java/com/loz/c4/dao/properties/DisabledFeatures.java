@@ -7,6 +7,10 @@ public class DisabledFeatures {
     private Boolean subtitles;
     private Boolean userAlerts;
     private Boolean kantar;
+    private Boolean metrics;
+    private Boolean mvt;
+    private Boolean innovid;
+    private Boolean autoplayLimit;
 
     public Boolean getSubtitles() {
         return subtitles;
@@ -30,5 +34,37 @@ public class DisabledFeatures {
 
     public void setKantar(Boolean kantar) {
         this.kantar = kantar;
+    }
+
+    public Boolean getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(Boolean metrics) {
+        this.metrics = metrics;
+    }
+
+    public Boolean getMvt() {
+        return mvt;
+    }
+
+    public void setMvt(Boolean mvt) {
+        this.mvt = mvt;
+    }
+
+    public Boolean getInnovid() {
+        return innovid;
+    }
+
+    public void setInnovid(Boolean innovid) {
+        this.innovid = innovid;
+    }
+
+    public Boolean getAutoplayLimit() {
+        return autoplayLimit;
+    }
+
+    public void setAutoplayLimit(Boolean autoplayLimit) {
+        this.autoplayLimit = autoplayLimit;
     }
 }
