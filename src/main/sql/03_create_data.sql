@@ -1,5 +1,5 @@
 DELETE FROM category;
-INSERT INTO category VALUES (-1, "Favourites", "https://eventapp.lozarcher.co.uk/categories/favourites.png");
+INSERT INTO category VALUES (999, "Favourites", "https://eventapp.lozarcher.co.uk/categories/favourites.png");
 INSERT INTO category VALUES (0, "All", "https://eventapp.lozarcher.co.uk/categories/all.png");
 INSERT INTO category VALUES (1, "Dinner", "https://eventapp.lozarcher.co.uk/categories/dinner.png");
 INSERT INTO category VALUES (2, "Booze", "https://eventapp.lozarcher.co.uk/categories/booze.png");
