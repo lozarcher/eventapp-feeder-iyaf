@@ -81,13 +81,18 @@ public class C4ConfigService {
     }
 
     public String getProperties() throws C4ConfigException {
-        String output = "<html><head><script src=\"https://use.fontawesome.com/ce8b493cf2.js\"></script></head>"+
-                "<body><table border=1><tr>"+
-                "<td>Platform</td>"+
-                "<td>Version</td><td>Subtitles</td>"+
-                "<td>Sumo Metrics</td><td>Sumo Logging</td><td>MVT</td><td>Innovid</td><td>Autoplay Limit</td>"
-                +"<td>User Alerts</td><td>Kantar</td><td>Credit Squeeze</td><td>Animation</td>"+
-                "<td>Conviva</td>"+
+        String output = "<html><head>"+
+                "<style>"+
+                "table { background-color: white; margin-left: auto; margin-right: auto; }"+
+                "body { background-image: url(\"/c4/unicorn.jpg\"); }"+
+                "</style>"+
+                "<script src=\"https://use.fontawesome.com/ce8b493cf2.js\"></script></head>"+
+                "<body><table border=1 cellpadding=3 cellspacing=0><tr>"+
+                "<td><strong>Platform</strong></td>"+
+                "<td><strong>Version</strong></td><td><strong>Subtitles</strong></td>"+
+                "<td><strong>Sumo Metrics</strong></td><td><strong>Sumo Logging</strong></td><td><strong>MVT</strong></td><td><strong>Innovid</strong></td><td><strong>Autoplay Limit</strong></td>"
+                +"<td><strong>User Alerts</strong></td><td><strong>Kantar</strong></td><td><strong>Credit Squeeze</strong></td><td><strong>Animation</strong></td>"+
+                "<td><strong>Conviva</strong></td>"+
                 "</tr>";
 
         List<PlatformConfig> platformConfigs = new ArrayList<>();
@@ -131,7 +136,7 @@ public class C4ConfigService {
                 //response = restTemplate.getForEntity(URLDecoder.decode(configUrl, "UTF-8"), String.class);
 
                 output += "<tr>"+
-                        "<td>"+platformConfig.getPlatformName()+"</td>"+
+                        "<td><strong>"+platformConfig.getPlatformName()+"</strong></td>"+
                         "<td>"+getVersion(platformConfig.getVersionUrl())+"</td>"+
                         "<td>"+getSubtitles(response.getBody())+"</td>"+
                         "<td>"+getMetrics(response.getBody())+"</td>"+
