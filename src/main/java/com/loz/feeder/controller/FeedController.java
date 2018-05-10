@@ -10,9 +10,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
-import com.loz.feeder.dao.model.GalleryData;
-import com.loz.feeder.dao.model.PostData;
-import com.loz.feeder.dao.model.TweetData;
+import com.loz.feeder.dao.model.*;
 import com.loz.feeder.dao.responseVo.*;
 import com.loz.feeder.service.*;
 import net.coobird.thumbnailator.Thumbnails;
@@ -81,10 +79,12 @@ public class FeedController {
     public EventCategoryResponse eventsWithCategories() {
         EventCategoryResponse response = new EventCategoryResponse();
         response.setDate(new Date());
-        response.setEvents(facebookService.getEvents());
-        response.setCategories(facebookService.getCategories());
+        Iterable<EventData> events = facebookService.getEvents();
+        response.setEvents(events);
+        response.setCategories(facebookService.getCategoriesWhichHaveEvents(events));
         return response;
     }
+
 
 
     @RequestMapping(value="/posts/{offset}", produces = "application/json")

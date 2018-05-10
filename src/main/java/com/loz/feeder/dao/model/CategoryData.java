@@ -13,15 +13,15 @@ import java.util.Set;
 @Table(name = "CATEGORY")
 public class CategoryData implements Serializable {
 
+    private static final Long ALL_CATEGORY_ID = 1L;
+    private static final Long FAVOURITES_CATEGORY_ID = 2L;
+
     @Id
     @Column(name = "ID", unique = true)
     private Long id;
 
     @Column(name = "CATEGORY")
     private String category;
-
-    @Column(name = "IMAGE")
-    private String image;
 
     @ManyToMany
     @JoinTable(
@@ -35,6 +35,9 @@ public class CategoryData implements Serializable {
     )
     @JsonIgnore
     private Set<EventData> events = new HashSet<>();
+
+    @Transient
+    private CategoryType categoryType;
 
     public Long getId() {
         return id;
@@ -52,19 +55,25 @@ public class CategoryData implements Serializable {
         this.category = category;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public Set<EventData> getEvents() {
         return events;
     }
 
     public void setEvents(Set<EventData> events) {
         this.events = events;
+    }
+
+    public CategoryType getCategoryType() {
+        if (this.id == ALL_CATEGORY_ID) {
+            return CategoryType.ALL;
+        }
+        if (this.id == FAVOURITES_CATEGORY_ID) {
+            return CategoryType.FAVOURITES;
+        }
+        return CategoryType.FILTER;
+    }
+
+    public void setCategoryType(CategoryType categoryType) {
+        this.categoryType = categoryType;
     }
 }

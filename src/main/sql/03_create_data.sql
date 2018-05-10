@@ -1,14 +1,14 @@
 DELETE FROM category;
-INSERT INTO category VALUES (1, "Dinner", "https://eventapp.lozarcher.co.uk/categories/dinner.png");
-INSERT INTO category VALUES (2, "Booze", "https://eventapp.lozarcher.co.uk/categories/booze.png");
-INSERT INTO category VALUES (3, "Family", "https://eventapp.lozarcher.co.uk/categories/family.png");
-INSERT INTO category VALUES (4, "Music", "https://eventapp.lozarcher.co.uk/categories/music.png");
-INSERT INTO category VALUES (5, "Talk", "https://eventapp.lozarcher.co.uk/categories/talk.png");
-INSERT INTO category VALUES (6, "Workshop", "https://eventapp.lozarcher.co.uk/categories/workshop.png");
-INSERT INTO category VALUES (7, "Craft", "https://eventapp.lozarcher.co.uk/categories/craft.png");
-INSERT INTO category VALUES (8, "Competition", "https://eventapp.lozarcher.co.uk/categories/competition.png");
-INSERT INTO category VALUES (999, "Favourites", "https://eventapp.lozarcher.co.uk/categories/favourites.png");
-INSERT INTO category VALUES (1000, "All", "https://eventapp.lozarcher.co.uk/categories/all.png");
+INSERT INTO category VALUES (1, "Dinner");
+INSERT INTO category VALUES (2, "Booze");
+INSERT INTO category VALUES (3, "Family");
+INSERT INTO category VALUES (4, "Music");
+INSERT INTO category VALUES (5, "Talk");
+INSERT INTO category VALUES (6, "Workshop");
+INSERT INTO category VALUES (7, "Craft");
+INSERT INTO category VALUES (8, "Competition");
+INSERT INTO category VALUES (999, "Favourites");
+INSERT INTO category VALUES (1000, "All");
 
 DELETE FROM event_category;
 INSERT INTO event_category VALUES (1596017840518904,5);

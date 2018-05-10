@@ -106,7 +106,6 @@ drop table if exists foodfest.category;
 create table foodfest.category (
 	ID INT(10) NOT NULL AUTO_INCREMENT,
   CATEGORY varchar(1000) not null,
-  IMAGE varchar(255) null,
 	PRIMARY KEY (`ID`)
 ) ENGINE INNODB;
 drop table if exists foodfest.event_category;

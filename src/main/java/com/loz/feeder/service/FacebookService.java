@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by larcher on 13/02/2015.
@@ -21,6 +20,8 @@ import java.util.List;
 public class FacebookService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FacebookService.class);
+
+    private static final Long START_ID_OF_REGULAR_CATEGORIES = 3L;
 
     @Autowired
     EventDao eventDao;
@@ -62,13 +63,28 @@ public class FacebookService {
     public Iterable<EventData> getEventsWithoutCategories() {
         Iterable<EventData> events = getEvents();
         for (EventData event : events) {
+            event.setCategoryData(null);
             event.setCategories(null);
         }
         return events;
     }
 
-    public Iterable<CategoryData> getCategories() {
-        return categoryDao.findAll();
+    public Iterable<CategoryData> getCategoriesWhichHaveEvents(Iterable<EventData> eventData) {
+        Iterable<CategoryData> categoryData = categoryDao.findAll();
+        Map<Long, CategoryData> categoryMap = new HashMap<Long, CategoryData>();
+        for (EventData event : eventData) {
+            // Only use return categories which are assigned to events
+            for (CategoryData category : event.getCategoryData()) {
+                categoryMap.put(category.getId(), category);
+            }
+        }
+        for (CategoryData category : categoryData) {
+            // Also add in "All" and "Favourites", which are not assigned to events
+            if (category.getId() < START_ID_OF_REGULAR_CATEGORIES) {
+                categoryMap.put(category.getId(), category);
+            }
+        }
+        return categoryMap.values();
     }
 
     public List<PostData> getPosts(Pageable pageable) {
