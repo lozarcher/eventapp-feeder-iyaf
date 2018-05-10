@@ -20,6 +20,9 @@ public class CategoryData implements Serializable {
     @Column(name = "CATEGORY")
     private String category;
 
+    @Column(name = "IMAGE")
+    private String image;
+
     @ManyToMany
     @JoinTable(
             name = "EVENT_CATEGORY",
@@ -47,6 +50,14 @@ public class CategoryData implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Set<EventData> getEvents() {

@@ -1,9 +1,11 @@
 package com.loz.feeder.dao.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loz.feeder.dao.feed.facebook.common.Cover;
 import com.loz.feeder.dao.feed.facebook.event.Event;
 import com.loz.feeder.dao.feed.facebook.common.Picture;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -51,8 +53,12 @@ public class EventData implements Serializable {
     private Long eventId;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "events" )
+    @JsonIgnore
+    private Collection<CategoryData> categoryData = new HashSet<>();
+
+    @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Collection<CategoryData> categories = new HashSet<>();
+    private Collection<Long> categories = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private VenueData venue;
@@ -164,11 +170,26 @@ public class EventData implements Serializable {
         this.eventId = eventId;
     }
 
-    public Collection<CategoryData> getCategories() {
-        return categories;
+    public Collection<CategoryData> getCategoryData() {
+        return categoryData;
     }
 
-    public void setCategories(Collection<CategoryData> categories) {
+    public void setCategoryData(Collection<CategoryData> categoryData) {
+        this.categoryData = categoryData;
+    }
+
+    public Collection<Long> getCategories() {
+        if (this.categoryData == null) {
+            return null;
+        }
+        HashSet<Long> ids = new HashSet<>();
+        for (CategoryData category : this.categoryData) {
+            ids.add(category.getId());
+        }
+        return ids;
+    }
+
+    public void setCategories(Collection<Long> categories) {
         this.categories = categories;
     }
 
