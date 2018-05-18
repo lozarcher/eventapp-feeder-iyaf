@@ -96,12 +96,12 @@ public class FeedController {
         List<PostData> posts = facebookService.getPosts(pageable);
         response.setData(posts);
         long total = facebookService.getTotalPosts();
-        if ((page * PAGESIZE) + posts.size() < total) {
-            page++;
-            response.setNext("/posts/"+page);
-        } else {
+        //if ((page * PAGESIZE) + posts.size() < total) {
+        //    page++;
+        //    response.setNext("/posts/"+page);
+        //} else {
             response.setNext(null);
-        }
+        //}
         return response;
     }
 
