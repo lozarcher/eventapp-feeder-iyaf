@@ -135,7 +135,7 @@ public class FeedController {
         return tweetsPaginated(0);
     }
 
-    @RequestMapping("/traders")
+    @RequestMapping(value="/traders", produces = "application/json")
     @ResponseBody
     public PageResponse performers() {
         PageResponse response = new PageResponse();

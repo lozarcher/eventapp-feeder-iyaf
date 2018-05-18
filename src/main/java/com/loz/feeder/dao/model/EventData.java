@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loz.feeder.dao.feed.facebook.common.Cover;
 import com.loz.feeder.dao.feed.facebook.event.Event;
-import com.loz.feeder.dao.feed.facebook.common.Picture;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.persistence.*;
 import java.io.Serializable;
