@@ -151,7 +151,7 @@ public class C4ConfigService {
                         "<td>"+getConviva(response.getBody())+"</td>"+
                         "</tr>";
             } else {
-                output += "<tr><td colspan=\"8\">Couldn't load the config file for "+platformConfig.getPlatformName()+" from "+platformConfig.getConfigUrl()+"</td></tr>";
+                output += "<tr><td><strong>"+platformConfig.getPlatformName()+"</strong></td><td colspan=\"12\">There is an error reading the config from "+platformConfig.getPlatformName()+"</td></tr>";
             }
 
 
@@ -253,7 +253,7 @@ public class C4ConfigService {
     private String getInnovid(PropertiesResponse properties) {
         Boolean innovid;
         try {
-            innovid = properties.getConfig().getDisabledFeatures().getMvt();
+            innovid = properties.getConfig().getDisabledFeatures().getInnovid();
             if (innovid) {
                 return cross();
             } else {
@@ -268,11 +268,12 @@ public class C4ConfigService {
     private String getAutoplayLimit(PropertiesResponse properties) {
         Boolean autoplayLimit;
         try {
-            autoplayLimit = properties.getConfig().getDisabledFeatures().getMvt();
+            autoplayLimit = properties.getConfig().getDisabledFeatures().getAutoplayLimit();
             if (autoplayLimit) {
                 return cross();
             } else {
-                return tick();
+                //return tick();
+                return properties.getConfig().getClientProperties().getAutoplayLimit().toString();
             }
         }
         catch (NullPointerException e) {

@@ -6,6 +6,7 @@ package com.loz.c4.dao.properties;
 public class ClientProperties {
     private Conviva conviva;
     private SumoLogic sumoLogic;
+    private Integer autoplayLimit;
 
     public Conviva getConviva() {
         return conviva;
@@ -21,5 +22,13 @@ public class ClientProperties {
 
     public void setSumoLogic(SumoLogic sumoLogic) {
         this.sumoLogic = sumoLogic;
+    }
+
+    public Integer getAutoplayLimit() {
+        return autoplayLimit;
+    }
+
+    public void setAutoplayLimit(Integer autoplayLimit) {
+        this.autoplayLimit = autoplayLimit;
     }
 }

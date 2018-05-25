@@ -6,7 +6,7 @@
 
     <groupId>com.lozarcher</groupId>
     <artifactId>eventapp-feeder-iyaf</artifactId>
-    <version>4.4</version>
+    <version>4.5</version>
     <packaging>war</packaging>
 
     <parent>
