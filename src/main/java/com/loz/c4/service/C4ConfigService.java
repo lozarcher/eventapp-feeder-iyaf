@@ -59,7 +59,8 @@ public class C4ConfigService {
                 "<style>"+
                 "table { background-color: white; margin-left: auto; margin-right: auto; }"+
                 "</style>"+
-                "<script src=\"https://use.fontawesome.com/ce8b493cf2.js\"></script></head>"+
+                "<script defer src=\"https://use.fontawesome.com/releases/v5.0.13/js/all.js\" integrity=\"sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe\" crossorigin=\"anonymous\"></script>" +
+                "</head>"+
                 "<body>";
 
         output += propertiesMappingHTML5.getPropertiesTable();
@@ -110,7 +111,7 @@ public class C4ConfigService {
     }
 
     protected String printDisabled() {
-        return "<i class=\"fa fa-times-circle\" style=\"color: grey\" aria-hidden=\"true\"></i>";
+        return "<i class=\"far fa-times-circle\" style=\"color: #888888\" aria-hidden=\"true\"></i>";
         //return "";
     }
 
