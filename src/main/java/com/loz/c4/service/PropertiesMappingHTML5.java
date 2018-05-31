@@ -178,7 +178,7 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
     private String getInnovid(PropertiesResponse properties) {
         Boolean innovid;
         try {
-            innovid = properties.getConfig().getDisabledFeatures().getMvt();
+            innovid = properties.getConfig().getDisabledFeatures().getInnovid();
             return C4ConfigService.displayValue(innovid, false);
         } catch (NullPointerException e) {
             return C4ConfigService.printNotPresent();
