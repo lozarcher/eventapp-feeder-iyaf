@@ -21,7 +21,7 @@ public class C4Controller {
     public String getConfigs() {
         LOGGER.info("/configs called - done");
         try {
-            return c4ConfigService.getProperties().toString();
+            return c4ConfigService.generatePropertiesPage().toString();
         } catch (C4ConfigException e) {
             return e.getLocalizedMessage();
         }

@@ -1,4 +1,4 @@
-package com.loz.c4.dao.properties;
+package com.loz.c4.dao.properties.html5;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
