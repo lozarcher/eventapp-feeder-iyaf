@@ -18,33 +18,37 @@ public class InstalledPlatformsRoku {
     public List<Installed>getPlatforms() {
         List<Installed> platforms = new ArrayList<>();
 
-        Installed intRoku = new Installed();
-        intRoku.setConfigUrl("https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-int.json");
-        intRoku.setVersionUrl("https://roku-p06.int.channel4.com/properties/releasenumber.xml");
-        intRoku.setTitle("Roku INT");
-        intRoku.setKey(rokuKey);
-        platforms.add(intRoku);
+        platforms.add(
+                new Installed(
+                        "Roku INT",
+                        "https://roku-p06.int.channel4.com/properties/releasenumber.xml",
+                        "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-int.json",
+                        rokuKey,
+                        rokuConfigVersion));
 
-        Installed testRoku = new Installed();
-        testRoku.setConfigUrl("https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-test.json");
-        testRoku.setVersionUrl("https://roku-p06.test.channel4.com/properties/releasenumber.xml");
-        testRoku.setTitle("Roku TEST");
-        testRoku.setKey(rokuKey);
-        platforms.add(testRoku);
+        platforms.add(
+                new Installed(
+                        "Roku TEST",
+                        "https://roku-p06.test.channel4.com/properties/releasenumber.xml",
+                        "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-test.json",
+                        rokuKey,
+                        rokuConfigVersion));
 
-        Installed stageRoku = new Installed();
-        stageRoku.setConfigUrl("https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-stage.json");
-        stageRoku.setVersionUrl("https://roku-p06.stage.channel4.com/properties/releasenumber.xml");
-        stageRoku.setTitle("Roku STAGE");
-        stageRoku.setKey(rokuKey);
-        platforms.add(stageRoku);
+        platforms.add(
+                new Installed(
+                        "Roku STAGE",
+                        "https://roku-p06.stage.channel4.com/properties/releasenumber.xml",
+                        "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-stage.json",
+                        rokuKey,
+                        rokuConfigVersion));
 
-        Installed prodRoku = new Installed();
-        prodRoku.setConfigUrl("https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-prod.json");
-        prodRoku.setVersionUrl("https://roku-p06.channel4.com/properties/releasenumber.xml");
-        prodRoku.setTitle("Roku PROD");
-        prodRoku.setKey(rokuKey);
-        platforms.add(prodRoku);
+        platforms.add(
+                new Installed(
+                        "Roku PROD",
+                        "https://roku-p06.channel4.com/properties/releasenumber.xml",
+                        "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-prod.json",
+                        rokuKey,
+                        rokuConfigVersion));
 
         return platforms;
     }
