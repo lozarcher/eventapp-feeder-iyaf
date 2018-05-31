@@ -1,25 +1,19 @@
 package com.loz.c4.service;
 
-import com.loz.c4.controller.Installed;
 import com.loz.c4.controller.InstalledPlatformsHTML5;
 import com.loz.c4.controller.Platform;
 import com.loz.c4.controller.PlatformConfig;
 import com.loz.c4.dao.config.ConfigResponse;
 import com.loz.c4.dao.properties.html5.PropertiesResponse;
 import com.loz.c4.exception.C4ConfigException;
-import com.loz.feeder.dao.release.ReleaseResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -29,6 +23,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
 
     @Autowired
     public InstalledPlatformsHTML5 installedPlatforms;
+
+    @Autowired
+    public C4ConfigService configService;
 
     public String getPropertiesTable() throws C4ConfigException {
         String output = "<table border=1 cellpadding=3 cellspacing=0><tr>"+
@@ -57,14 +54,7 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
             platformConfigs.add(platformConfig);
         }
 
-        for (Installed platform : installedPlatforms.getPlatforms()) {
-            PlatformConfig platformConfig = new PlatformConfig();
-            platformConfig.setPlatformName(platform.getTitle());
-            platformConfig.setConfigUrl(platform.getConfigUrl());
-            platformConfig.setKey(platform.getKey());
-            platformConfig.setVersionUrl(platform.getVersionUrl());
-            platformConfigs.add(platformConfig);
-        }
+        configService.addPlatform(platformConfigs, installedPlatforms.getPlatforms());
 
 
         for (PlatformConfig platformConfig : platformConfigs) {
@@ -77,12 +67,12 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
             HttpEntity entity = new HttpEntity(headers);
 
             boolean success = false;
-            if (C4ConfigService.isUrlValid(platformConfig.getConfigUrl())) {
+            if (configService.isUrlValid(platformConfig.getConfigUrl())) {
                 try {
-                    response = C4ConfigService.restTemplate().exchange(URLDecoder.decode(platformConfig.getConfigUrl()), HttpMethod.GET, entity, PropertiesResponse.class);
+                    response = configService.restTemplate().exchange(URLDecoder.decode(platformConfig.getConfigUrl()), HttpMethod.GET, entity, PropertiesResponse.class);
                     output += "<tr>" +
                             "<td><strong>" + platformConfig.getPlatformName() + "</strong></td>" +
-                            "<td>" + getVersion(platformConfig.getVersionUrl()) + "</td>" +
+                            "<td>" + configService.getVersion(platformConfig.getVersionUrl()) + "</td>" +
                             "<td>" + getSubtitles(response.getBody()) + "</td>" +
                             "<td>" + getMetrics(response.getBody()) + "</td>" +
                             "<td>" + getLogging(response.getBody()) + "</td>" +
@@ -101,10 +91,13 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
                 } catch (Exception e) {
                     LOGGER.error(e.getLocalizedMessage()+" for "+platformConfig.getPlatformName());
                 }
-                //response = restTemplate.getForEntity(URLDecoder.decode(configUrl, "UTF-8"), String.class);
             }
             if (!success) {
-                output += "<tr><td><strong>" + platformConfig.getPlatformName() + "</strong></td><td colspan=\"13\">There is an error reading the config from " + platformConfig.getPlatformName() + "</td></tr>";
+                output += "<tr><td><strong>"
+                        + platformConfig.getPlatformName() +
+                        "</strong></td><td colspan=\"13\">There is an error reading the config from "
+                        + platformConfig.getPlatformName()
+                        + "</td></tr>";
             }
         }
         output += "</table>";
@@ -114,7 +107,7 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
     private ConfigResponse getConfigResponse(String configUrl) throws C4ConfigException {
         ResponseEntity<ConfigResponse> response = null;
         try {
-            response = C4ConfigService.restTemplate().getForEntity(URLDecoder.decode(configUrl, "UTF-8"), ConfigResponse.class);
+            response = configService.restTemplate().getForEntity(URLDecoder.decode(configUrl, "UTF-8"), ConfigResponse.class);
         } catch (UnsupportedEncodingException e) {
             LOGGER.error(e.getMessage());
         }
@@ -125,10 +118,10 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean subtitles;
         try {
             subtitles = properties.getConfig().getDisabledFeatures().getSubtitles();
-            return C4ConfigService.displayValue(subtitles, false);
+            return configService.displayValue(subtitles, false);
         }
         catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -137,10 +130,10 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean userAlerts;
         try {
             userAlerts = properties.getConfig().getDisabledFeatures().getUserAlerts();
-            return C4ConfigService.displayValue(userAlerts, false);
+            return configService.displayValue(userAlerts, false);
         }
         catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -149,9 +142,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean kantar;
         try {
             kantar = properties.getConfig().getDisabledFeatures().getKantar();
-            return C4ConfigService.displayValue(kantar, false);
+            return configService.displayValue(kantar, false);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -159,9 +152,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean metrics;
         try {
             metrics = properties.getConfig().getDisabledFeatures().getMetrics();
-            return C4ConfigService.displayValue(metrics, false);
+            return configService.displayValue(metrics, false);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -169,9 +162,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean mvt;
         try {
             mvt = properties.getConfig().getDisabledFeatures().getMvt();
-            return C4ConfigService.displayValue(mvt, false);
+            return configService.displayValue(mvt, false);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -179,9 +172,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean innovid;
         try {
             innovid = properties.getConfig().getDisabledFeatures().getInnovid();
-            return C4ConfigService.displayValue(innovid, false);
+            return configService.displayValue(innovid, false);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -190,13 +183,13 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         try {
             autoplayLimit = properties.getConfig().getDisabledFeatures().getAutoplayLimit();
             if (autoplayLimit) {
-                return C4ConfigService.printDisabled();
+                return configService.printDisabled();
             } else {
                 return properties.getConfig().getClientProperties().getAutoplayLimit().toString();
             }
         }
         catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -204,9 +197,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean creditSqueeze;
         try {
             creditSqueeze = properties.getConfig().getCreditSqueeze();
-            return C4ConfigService.displayValue(creditSqueeze, true);
+            return configService.displayValue(creditSqueeze, true);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -214,9 +207,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean animation;
         try {
             animation = properties.getConfig().getAnimation();
-            return C4ConfigService.displayValue(animation, true);
+            return configService.displayValue(animation, true);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -224,9 +217,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean conviva;
         try {
             conviva = properties.getConfig().getClientProperties().getConviva().getEnabled();
-            return C4ConfigService.displayValue(conviva, true);
+            return configService.displayValue(conviva, true);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -234,9 +227,9 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean logging;
         try {
             logging = properties.getConfig().getClientProperties().getSumoLogic().getEnabled();
-            return C4ConfigService.displayValue(logging, true);
+            return configService.displayValue(logging, true);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
@@ -244,37 +237,13 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         Boolean promoAlert;
         try {
             promoAlert = properties.getConfig().getClientProperties().getPromoAlert().isDisplay();
-            return C4ConfigService.displayValue(promoAlert, true);
+            return configService.displayValue(promoAlert, true);
         } catch (NullPointerException e) {
-            return C4ConfigService.printNotPresent();
+            return configService.printNotPresent();
         }
     }
 
-    private String getVersion(String versionUrl) {
-        RestTemplate rest = new RestTemplate();
-        VersionXmlMessageConverter converter = new VersionXmlMessageConverter();
-        rest.setMessageConverters(Arrays.asList(converter, new FormHttpMessageConverter()));
-        ReleaseResponse release;
-        try {
-            release = rest.getForObject(versionUrl,
-                    ReleaseResponse.class);
-        } catch (RuntimeException e) {
-            return "-";
-        }
-        if (release != null) {
-            return release.getVersion();
-        } else {
-            return "-";
-        }
-    }
 
-    private class VersionXmlMessageConverter extends MappingJackson2XmlHttpMessageConverter {
-        private VersionXmlMessageConverter() {
-            List<MediaType> types = Arrays.asList(
-                    new MediaType("application", "json", DEFAULT_CHARSET),
-                    new MediaType("application", "xml", DEFAULT_CHARSET)
-            );
-            super.setSupportedMediaTypes(types);
-        }
-    }
+
+
 }
