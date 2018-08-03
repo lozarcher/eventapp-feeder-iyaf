@@ -11,6 +11,7 @@ public class DisabledFeatures {
     private Boolean mvt;
     private Boolean innovid;
     private Boolean autoplayLimit;
+    private Boolean pauseAd;
 
     public Boolean getSubtitles() {
         return subtitles;
@@ -66,5 +67,13 @@ public class DisabledFeatures {
 
     public void setAutoplayLimit(Boolean autoplayLimit) {
         this.autoplayLimit = autoplayLimit;
+    }
+
+    public Boolean getPauseAd() {
+        return pauseAd;
+    }
+
+    public void setPauseAd(Boolean pauseAd) {
+        this.pauseAd = pauseAd;
     }
 }

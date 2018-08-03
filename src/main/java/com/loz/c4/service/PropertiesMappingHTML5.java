@@ -31,8 +31,8 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
         String output = "<table border=1 cellpadding=3 cellspacing=0><tr>"+
                 "<td><strong>Platform</strong></td>"+
                 "<td><strong>Version</strong></td><td><strong>Subtitles</strong></td>"+
-                "<td><strong>Sumo Metrics</strong></td><td><strong>Sumo Logging</strong></td><td><strong>MVT</strong></td><td><strong>Innovid</strong></td><td><strong>Autoplay Limit</strong></td>"
-                +"<td><strong>User Alerts</strong></td><td><strong>Kantar</strong></td><td><strong>Credit Squeeze</strong></td><td><strong>Animation</strong></td>"+
+                "<td><strong>Sumo Metrics</strong></td><td><strong>Sumo Logging</strong></td><td><strong>MVT</strong></td><td><strong>Innovid</strong></td><td><strong>Autoplay Limit</strong></td>"+
+                "<td><strong>Ad Pause</strong></td><td><strong>User Alerts</strong></td><td><strong>Kantar</strong></td><td><strong>Credit Squeeze</strong></td><td><strong>Animation</strong></td>"+
                 "<td><strong>Conviva</strong></td>"+
                 "<td><strong>Add to My List</strong></td>"+
                 "</tr>";
@@ -79,6 +79,7 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
                             "<td>" + getMvt(response.getBody()) + "</td>" +
                             "<td>" + getInnovid(response.getBody()) + "</td>" +
                             "<td>" + getAutoplayLimit(response.getBody()) + "</td>" +
+                            "<td>" + getAdPause(response.getBody()) + "</td>" +
                             "<td>" + getUserAlerts(response.getBody()) + "</td>" +
                             "<td>" + getKantar(response.getBody()) + "</td>" +
                             "<td>" + getCreditSqueeze(response.getBody()) + "</td>" +
@@ -186,6 +187,21 @@ public class PropertiesMappingHTML5 implements C4PropertiesMapping {
                 return configService.printDisabled();
             } else {
                 return properties.getConfig().getClientProperties().getAutoplayLimit().toString();
+            }
+        }
+        catch (NullPointerException e) {
+            return configService.printNotPresent();
+        }
+    }
+
+    private String getAdPause(PropertiesResponse properties) {
+        Boolean adPause;
+        try {
+            adPause = properties.getConfig().getDisabledFeatures().getPauseAd();
+            if (adPause) {
+                return configService.printDisabled();
+            } else {
+                return configService.printEnabled();
             }
         }
         catch (NullPointerException e) {

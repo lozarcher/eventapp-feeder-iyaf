@@ -20,7 +20,7 @@ public class InstalledPlatformsRoku {
 
         platforms.add(
                 new Installed(
-                        "Roku INT",
+                        "Roku INT ("+rokuConfigVersion+")",
                         "https://roku-p06.int.channel4.com/properties/releasenumber.xml",
                         "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-int.json",
                         rokuKey,
@@ -28,7 +28,7 @@ public class InstalledPlatformsRoku {
 
         platforms.add(
                 new Installed(
-                        "Roku TEST",
+                        "Roku TEST ("+rokuConfigVersion+")",
                         "https://roku-p06.test.channel4.com/properties/releasenumber.xml",
                         "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-test.json",
                         rokuKey,
@@ -36,7 +36,7 @@ public class InstalledPlatformsRoku {
 
         platforms.add(
                 new Installed(
-                        "Roku STAGE",
+                        "Roku STAGE ("+rokuConfigVersion+")",
                         "https://roku-p06.stage.channel4.com/properties/releasenumber.xml",
                         "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-stage.json",
                         rokuKey,
@@ -44,7 +44,7 @@ public class InstalledPlatformsRoku {
 
         platforms.add(
                 new Installed(
-                        "Roku PROD",
+                        "Roku PROD ("+rokuConfigVersion+")",
                         "https://roku-p06.channel4.com/properties/releasenumber.xml",
                         "https://roku-p06.channel4.com/properties/"+rokuConfigVersion+"/all4-roku-properties-prod.json",
                         rokuKey,

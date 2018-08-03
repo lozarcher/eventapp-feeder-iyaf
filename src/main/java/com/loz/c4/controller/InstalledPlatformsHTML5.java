@@ -20,7 +20,7 @@ public class InstalledPlatformsHTML5 {
 
         platforms.add(
                 new Installed(
-                "Samsung INT",
+                "Samsung INT ("+samsungConfigVersion+")",
                 "https://samsung.int.channel4.com/properties/releasenumber.xml",
                 "https://samsung.int.channel4.com/properties/"+samsungConfigVersion+"/all4-samsung-properties-prod.json",
                 samsungKey,
@@ -29,7 +29,7 @@ public class InstalledPlatformsHTML5 {
 
         platforms.add(
                 new Installed(
-                        "Samsung TEST",
+                        "Samsung TEST ("+samsungConfigVersion+")",
                         "https://samsung.test.channel4.com/properties/releasenumber.xml",
                         "https://samsung.test.channel4.com/properties/"+samsungConfigVersion+"/all4-samsung-properties-prod.json",
                         samsungKey,
@@ -37,7 +37,7 @@ public class InstalledPlatformsHTML5 {
 
         platforms.add(
                 new Installed(
-                        "Samsung STAGE",
+                        "Samsung STAGE ("+samsungConfigVersion+")",
                         "https://samsung.stage.channel4.com/properties/releasenumber.xml",
                         "https://samsung.stage.channel4.com/properties/"+samsungConfigVersion+"/all4-samsung-properties-prod.json",
                         samsungKey,
@@ -45,7 +45,7 @@ public class InstalledPlatformsHTML5 {
 
         platforms.add(
                 new Installed(
-                        "Samsung PROD",
+                        "Samsung PROD ("+samsungConfigVersion+")",
                         "https://samsung.channel4.com/properties/releasenumber.xml",
                         "https://samsung.channel4.com/properties/"+samsungConfigVersion+"/all4-samsung-properties-prod.json",
                         samsungKey,
