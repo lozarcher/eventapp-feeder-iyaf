@@ -2,7 +2,7 @@ drop table if exists foodfest.event;
 create table foodfest.event (
       ID NUMERIC(20,0) not null,
       NAME varchar(255) null,
-      DESCRIPTION varchar(4000) null,
+      DESCRIPTION varchar(4000) CHARSET utf8,
       PROFILE_URL varchar(255) null,
       COVER_URL varchar(255) null,
       COVER_OFFSET_X INT null,
@@ -13,8 +13,7 @@ create table foodfest.event (
       VENUE_ID NUMERIC(20,0) null,
       TICKET_URI varchar(255) null,
       EVENT_ID NUMERIC(20,0) not null,
-     	PRIMARY KEY (`ID`),
-
+     	PRIMARY KEY (`ID`)
 );
 drop table if exists foodfest.tweet;
 create table foodfest.tweet (
