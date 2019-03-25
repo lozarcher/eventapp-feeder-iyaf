@@ -1,3 +1,4 @@
 create database foodfest;
 
-GRANT ALL PRIVILEGES ON foodfest.* TO 'foodfest'@'%' IDENTIFIED BY '32lrorf0ef2' WITH GRANT OPTION;
+CREATE USER 'foodfest'@'localhost' IDENTIFIED WITH mysql_native_password BY 'foodfest';
+GRANT ALL PRIVILEGES ON foodfest.* TO 'foodfest'@'localhost' WITH GRANT OPTION;

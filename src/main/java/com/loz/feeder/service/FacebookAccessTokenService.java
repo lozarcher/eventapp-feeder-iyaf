@@ -44,5 +44,9 @@ public class FacebookAccessTokenService {
 
         return response.getBody().getAccess_token();
     }
+
+//    private String getPageAccessToken() throws FacebookAccessTokenNotFoundException {
+//        RestTemplate
+//    }
 }
 
