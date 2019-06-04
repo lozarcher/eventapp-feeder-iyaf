@@ -80,7 +80,7 @@ create table foodfest.post (
   PICTURE varchar(1000) null,
   LINK varchar(1000) null,
 	NAME varchar(255) CHARSET utf8,
-	CAPTION varchar(4000) null,
+	CAPTION varchar(4000) CHARSET utf8,
 	CREATED_DATE TIMESTAMP NOT NULL
 );
 drop table if exists foodfest.gallery;
